@@ -1,0 +1,39 @@
+[submodule "Paddle"]
+	path = Paddle
+	url = https://github.com/PaddlePaddle/Paddle.git
+[submodule "zyne"]
+	path = zyne
+	url = https://github.com/belangeo/zyne.git
+[submodule "soundgrain"]
+	path = soundgrain
+	url = https://github.com/belangeo/soundgrain.git
+[submodule "pyo"]
+	path = pyo
+	url = https://github.com/belangeo/pyo.git
+[submodule "csound"]
+	path = csound
+	url = https://github.com/csound/csound.git
+[submodule "cookdsp"]
+	path = cookdsp
+	url = https://github.com/belangeo/cookdsp.git
+[submodule "cecilia5"]
+	path = cecilia5
+	url = https://github.com/belangeo/cecilia5.git
+[submodule "tensorflow"]
+	path = tensorflow
+	url = https://github.com/tensorflow/tensorflow.git
+[submodule "TensorFlow-Examples"]
+	path = TensorFlow-Examples
+	url = https://github.com/aymericdamien/TensorFlow-Examples.git
+[submodule "awesome-tensorflow"]
+	path = awesome-tensorflow
+	url = https://github.com/jtoy/awesome-tensorflow.git
+[submodule "carfac"]
+	path = carfac
+	url = https://github.com/google/carfac.git
+[submodule "gtfblib"]
+	path = gtfblib
+	url = https://github.com/jthiem/gtfblib.git
+[submodule "cochlea"]
+	path = cochlea
+	url = https://github.com/mrkrd/cochlea.git
