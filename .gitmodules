@@ -37,3 +37,12 @@
 [submodule "cochlea"]
 	path = cochlea
 	url = https://github.com/mrkrd/cochlea.git
+[submodule "incubator-mxnet"]
+	path = incubator-mxnet
+	url = https://github.com/apache/incubator-mxnet.git
+[submodule "mxnet-notebooks"]
+	path = mxnet-notebooks
+	url = https://github.com/dmlc/mxnet-notebooks.git
+[submodule "mxnet-the-straight-dope"]
+	path = mxnet-the-straight-dope
+	url = https://github.com/zackchase/mxnet-the-straight-dope.git
