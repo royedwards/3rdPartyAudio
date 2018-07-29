@@ -49,3 +49,9 @@
 [submodule "lucid"]
 	path = lucid
 	url = https://github.com/tensorflow/lucid.git
+[submodule "opencv"]
+	path = opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "pure-data"]
+	path = pure-data
+	url = https://github.com/pure-data/pure-data.git
