@@ -46,3 +46,6 @@
 [submodule "mxnet-the-straight-dope"]
 	path = mxnet-the-straight-dope
 	url = https://github.com/zackchase/mxnet-the-straight-dope.git
+[submodule "lucid"]
+	path = lucid
+	url = https://github.com/tensorflow/lucid.git
