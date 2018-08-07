@@ -55,3 +55,24 @@
 [submodule "pure-data"]
 	path = pure-data
 	url = https://github.com/pure-data/pure-data.git
+[submodule "Sound-Analyser"]
+	path = Sound-Analyser
+	url = https://github.com/adamstark/Sound-Analyser.git
+[submodule "Beat-Tracking-Evaluation-Toolbox"]
+	path = Beat-Tracking-Evaluation-Toolbox
+	url = https://github.com/adamstark/Beat-Tracking-Evaluation-Toolbox.git
+[submodule "Gist"]
+	path = Gist
+	url = https://github.com/adamstark/Gist.git
+[submodule "Chord-Detector-and-Chromagram"]
+	path = Chord-Detector-and-Chromagram
+	url = https://github.com/adamstark/Chord-Detector-and-Chromagram.git
+[submodule "BTrack"]
+	path = BTrack
+	url = https://github.com/adamstark/BTrack.git
+[submodule "MoogLadders"]
+	path = MoogLadders
+	url = https://github.com/ddiakopoulos/MoogLadders.git
+[submodule "secret-sauce"]
+	path = secret-sauce
+	url = https://github.com/tsellam/secret-sauce.git
