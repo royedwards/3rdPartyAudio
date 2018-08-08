@@ -76,3 +76,18 @@
 [submodule "secret-sauce"]
 	path = secret-sauce
 	url = https://github.com/tsellam/secret-sauce.git
+[submodule "audiotoolkitplugins-code"]
+	path = audiotoolkitplugins-code
+	url = https://git.code.sf.net/p/audiotoolkitplugins/code
+[submodule "libdsp-x15"]
+	path = libdsp-x15
+	url = https://github.com/henrix/libdsp-x15.git
+[submodule "ctag-face-2-4"]
+	path = ctag-face-2-4
+	url = https://github.com/ctag-fh-kiel/ctag-face-2-4.git
+[submodule "ALSA-sound-card-evaluation"]
+	path = ALSA-sound-card-evaluation
+	url = https://github.com/henrix/ALSA-sound-card-evaluation.git
+[submodule "beagle-linux"]
+	path = beagle-linux
+	url = https://github.com/henrix/beagle-linux.git
