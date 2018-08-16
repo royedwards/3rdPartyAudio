@@ -91,3 +91,6 @@
 [submodule "beagle-linux"]
 	path = beagle-linux
 	url = https://github.com/henrix/beagle-linux.git
+[submodule "armnn"]
+	path = armnn
+	url = https://github.com/Arm-software/armnn
