@@ -109,3 +109,9 @@
 [submodule "resonance-audio-daw-tools"]
 	path = resonance-audio-daw-tools
 	url = git@github.com:resonance-audio/resonance-audio-daw-tools.git
+[submodule "ray-tracing-audio"]
+	path = ray-tracing-audio
+	url = git@github.com:JustGoscha/ray-tracing-audio.git
+[submodule "ear"]
+	path = ear
+	url = git@github.com:aothms/ear.git

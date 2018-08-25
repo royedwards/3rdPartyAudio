@@ -1,0 +1,303 @@
+<ui version="4.0" >
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Preferred" hsizetype="Preferred" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>Chordata</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="images.qrc" >
+    <normaloff>:/icons/images/segmentation.svg</normaloff>:/icons/images/segmentation.svg</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget" />
+  <widget class="QMenuBar" name="menubar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>640</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuOpenRecent" >
+     <property name="title" >
+      <string>Open &amp;recent</string>
+     </property>
+    </widget>
+    <addaction name="fileOpenAction" />
+    <addaction name="menuOpenRecent" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="menuPlayback" >
+    <property name="title" >
+     <string>&amp;Playback</string>
+    </property>
+    <addaction name="playbackPlayAction" />
+    <addaction name="playbackPauseAction" />
+    <addaction name="playbackStopAction" />
+   </widget>
+   <widget class="QMenu" name="menu_View" >
+    <property name="title" >
+     <string>&amp;View</string>
+    </property>
+    <addaction name="viewSpectrogramAction" />
+    <addaction name="viewChromaPeaksAction" />
+    <addaction name="viewTonnetzAction" />
+    <addaction name="viewKeySpaceAction" />
+    <addaction name="viewChordRankingAction" />
+    <addaction name="viewSegmentationAction" />
+    <addaction name="viewPianoAction" />
+   </widget>
+   <widget class="QMenu" name="menu_Help" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="helpOnlineTutorialAction" />
+    <addaction name="helpWhatsThisAction" />
+    <addaction name="helpAboutAction" />
+   </widget>
+   <addaction name="menuFile" />
+   <addaction name="menuPlayback" />
+   <addaction name="menu_View" />
+   <addaction name="menu_Help" />
+  </widget>
+  <widget class="QStatusBar" name="statusbar" />
+  <widget class="QToolBar" name="toolBar" >
+   <property name="windowTitle" >
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea" >
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
+   </attribute>
+   <addaction name="fileOpenAction" />
+   <addaction name="separator" />
+   <addaction name="playbackPlayAction" />
+   <addaction name="playbackPauseAction" />
+   <addaction name="playbackStopAction" />
+   <addaction name="separator" />
+   <addaction name="viewSpectrogramAction" />
+   <addaction name="viewChromaPeaksAction" />
+   <addaction name="viewTonnetzAction" />
+   <addaction name="viewKeySpaceAction" />
+   <addaction name="viewChordRankingAction" />
+   <addaction name="viewSegmentationAction" />
+   <addaction name="viewPianoAction" />
+   <addaction name="separator" />
+   <addaction name="helpOnlineTutorialAction" />
+   <addaction name="helpWhatsThisAction" />
+  </widget>
+  <action name="fileOpenAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/fileopen.png</normaloff>:/icons/images/fileopen.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Open</string>
+   </property>
+   <property name="statusTip" >
+    <string>Open a song</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="fileExitAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/exit.png</normaloff>:/icons/images/exit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>E&amp;xit</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="playbackPlayAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_play.png</normaloff>:/icons/images/player_play.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Play</string>
+   </property>
+   <property name="shortcut" >
+    <string>Space</string>
+   </property>
+  </action>
+  <action name="playbackStopAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_stop.png</normaloff>:/icons/images/player_stop.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Stop</string>
+   </property>
+   <property name="shortcut" >
+    <string>Esc</string>
+   </property>
+  </action>
+  <action name="playbackPauseAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_pause.png</normaloff>:/icons/images/player_pause.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Pause</string>
+   </property>
+  </action>
+  <action name="helpOnlineTutorialAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/help.png</normaloff>:/icons/images/help.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Online &amp;tutorial</string>
+   </property>
+   <property name="shortcut" >
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="helpWhatsThisAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/contexthelp.png</normaloff>:/icons/images/contexthelp.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;What's this</string>
+   </property>
+   <property name="shortcut" >
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="helpAboutAction" >
+   <property name="text" >
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="viewChromaPeaksAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/polarchromapeaks.svg</normaloff>:/icons/images/polarchromapeaks.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>Chroma &amp;Peaks</string>
+   </property>
+  </action>
+  <action name="viewTonnetzAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/tonnetz.svg</normaloff>:/icons/images/tonnetz.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Tonnetz</string>
+   </property>
+  </action>
+  <action name="viewKeySpaceAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/keyspace.svg</normaloff>:/icons/images/keyspace.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Key Space</string>
+   </property>
+  </action>
+  <action name="viewChordRankingAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/chordranking.svg</normaloff>:/icons/images/chordranking.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>Chord &amp;Ranking</string>
+   </property>
+  </action>
+  <action name="viewSegmentationAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/segmentation.svg</normaloff>:/icons/images/segmentation.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Segmentation</string>
+   </property>
+  </action>
+  <action name="viewSpectrogramAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/spectrogram.svg</normaloff>:/icons/images/spectrogram.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>Spectrogram</string>
+   </property>
+  </action>
+  <action name="actionRealTimeCapture" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/mix_microphone.png</normaloff>:/icons/images/mix_microphone.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Real time capture</string>
+   </property>
+  </action>
+  <action name="viewPianoAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/piano.svg</normaloff>:/icons/images/piano.svg</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Piano</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="images.qrc" />
+ </resources>
+ <connections/>
+</ui>

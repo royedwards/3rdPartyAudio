@@ -1,0 +1,46 @@
+This file explains how to compile and install the CLAM applications 
+from the source tarballs.
+
+ 1. Install CLAM dependencies
+
+ Please refer to the INSTALL file in the CLAM (library) tarball.
+ NetworkEditor adds additional dependencies on python development
+ files. Debian/Ubuntu dependencies: python-dev 
+   
+ 2. Compile CLAM libraries from the tarball
+ 
+ Please refere to the INSTALL file in the CLAM (library) tarball.
+
+
+ 3. Compile the CLAM application.
+ From the root of NetworkEditor source, suposing that CLAM binaries
+ were installed at prefix /usr/local:
+
+     $ scons install prefix=/usr/local clam_prefix=/usr/local
+
+ if you are not using Linux/Debian (or Ubuntu) you'll need to define QTDIR
+ hint: in Fedora Core 6 use QTDIR=/usr
+
+ For further building options do :
+
+     $ scons --help
+
+ Notice that if you are using a non-standard clam_prefix, you might 
+ need to make the LD_LIBRARY_PATH to point to the CLAM lib directory.
+
+--
+ Single command to recompile and install clam and then this application:
+
+ $ (cd ../CLAM && scons && scons install) && scons && ./NetworkEditor
+
+ When doing development the recommended procedure to run designer and
+ prototyper with qt plugins without installing is:
+
+    $ cd NetworkEditor
+    $ export QT_PLUGIN_PATH=.
+    $ mkdir designer
+    $ scons && cp libCLAMWidgets.so designer
+    $ designer-qt4
+    $ ./Prototyper
+
+

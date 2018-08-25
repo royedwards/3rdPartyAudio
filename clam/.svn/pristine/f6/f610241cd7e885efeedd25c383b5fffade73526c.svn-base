@@ -1,0 +1,243 @@
+- Dummy Network:
+[X]	- processingsName -> processingNames
+	- Dummy: tests for ProcessingWithConfig
+
+
+- Polishing connector interface:
+	- Dummy_NetworkProxy.connectorType,Index... failure case (assert? exception?)
+[X]	- Index and type should be queried to the proxy instead of passed as constructor parameters and stored as attribute. 
+		For tests using constructor parameters instead of a definition structure we can keep these attributes, query the proxy just when they are None
+[X]	- PeerConnectors.__len__()
+[X]	- Rework proxy interface and external objects constructors so that parameters are specified in order of search
+		(proxy,processingname,kind,direction,connectorname...)
+
+- Network interface:
+[X]	- Method to list all the processings on the network
+	- Given a dummy defined network net=Network(dummyProxy)
+[X]		- Getting a processing with net.procesingName
+[X]		- Getting a processing with net["processingName"]
+[X]		- Failure case on net.missingProcessingName 
+[X]		- Failure case on net["missingProcessingName"]
+[X]		- Exploring the processings in a network with net.[tab] (__dir__)
+[X]		- In parallel defining and refactor dummy proxy interface for processing enumeration
+	- Creating processings
+[X]		- Processing factories for the dummy proxy
+[X]		- Adding a processing
+[X]			- 1 x Network.addProcessing -> code
+[X]			- 2 x Network.addProcessing -> code (same type)
+[X]			- 2 x Network.addProcessing (different type) -> code
+	- Self generation code (network is able to generate python code to generate itself again)
+[X]		- Self writting code for processings
+[X]		- Self writting code for connections
+[X]		- Self writting code for configurations
+	- Dummy Configurations
+[X]		- Test type check
+[X]		- Test name check on getting
+[X]		- Test name check on setting (differs from regular dict!)
+[X]		- Push the check on Configuration down on the Dummy_ConfigurationProxy
+		- Config information in dummy proxy (tests)
+[X]		- config = proc._config.clone()
+[X]		- proc._config = config
+[X]		- proc.config.Param1 = "illegal value" -> raise
+			- ask proxy.isCompatibleConfigurationValue(proc, param, value)
+[X]		- proc.config.Param1 = "value"
+			- config = proxy.setConfiguration(proc)
+			- config.setValue(param, value)
+			- proxy.Configure(proc, config)
+	- CLAM Configurations
+[X]		- Implement the visitor
+			- from a CLAM::Configuration get a proper ipyclam::Configuration
+			- from a ipyclam::Configuration obtain a CLAM::Configuration
+		- Implement all the types in ConfiguratorPlugin
+	- Multilevel configs
+	- Additional features
+[X]		- dir(network.types) should give all the available types as symbols
+[X]		- network.types.MinimalProcessing should return "MinimalProcessing"
+[X]		- network.types.NonExistingType should raise AttributeError
+[X]		- network.processing1.name = "processing2" # renaming
+		- network.processing1 = network.processing2 # cloning
+[X]		- network.description
+[X]		- network.description = "A description"
+[X]		- del network.processing1 # removing
+[X]		- network.processing1.InControl1.disconnect(network.Processing1.OutControl1) # just that connection
+			- Fail if not connected?
+[X]		- network.processing1.InControl1.disconnect(network.Processing1) # any connections to Processing1
+[X]		- network.processing1.InControl1.disconnect() # any connections
+[X]		- network.code = "Type", should fail (and any existing network method)
+[X]		- net.code(networkVar="aNetwork") generates code using 'aNetwork' as var for the network
+[X]		- net.code dealing weird names, should use subscript net["A processing"] or net.proc1["A connector"]
+			- Failing names:
+				- Containing other than [a-zA-Z_][a-zA-Z_09]*
+				- Names which are properties (types, 
+			- When?
+				- Processing instantiation
+				- Procesing in processing connection
+				- Connector in processing connector
+			- How?
+				- helper function appendAttribute(name) which returns "."+name if ok or "['%s']"%name if not ok
+				- helper function isAlphanumeric(name) which returns 
+				- helper to know whether is a given property of the entity (how??)
+		- Broadcast/Bus connections: 
+			- Behaviour:
+				- return the number of connections done
+				- connect as many compatible connections as available, matching index
+				- < and > version restrict directionality
+			- Connector.connect(Connectors): all from Connector connectable to Connectors (returns n of connections done)
+			- Connector.connect(Processing): all from processing connectable to Connector
+[X]			- Processing.connect(Connector): all from processing connectable to Connector
+[X]			- Processing.connect(Connectors): all from processing connectable to Connectors
+[X]			- Processing.connect(Processing): all connectable in order
+			- Connectors.connect(Connector): all from Connectors connectable to Connector (returns n of connections done)
+			- Connectors.connect(Processing): all from processing connectable to Connector
+			- Connectors[1::2].connect(Processing) and the like (Suggestion the slice should return a Connectors with a diferent list)
+	- Advanced features (no prioritary at all)
+		- Type properties (category, description, port_monitor_type, icon, faust_svg...)
+			- net.types.AType should be able to be used as now to instanciate processings
+			- They are dynamic properties that may or may not be present
+			- They are not settable
+			- Now types are strings, after this feature current code should still work
+		- Type categories: there are many types, we have categories, solutions?
+			- net.types.categories.[tab]
+
+
+- Connecting
+	- Test Connector.connect(Connector)
+[X]		increments the peers
+[X]		increments the peer peers
+		many kinds:
+[X]			output first
+[X]			input first
+[X]			controls
+[X]			ports
+		error conditions
+[X]			different kind
+[X]			same direction
+[X]			different type
+[X]	- Test > operator to connect
+[X]	- Test < operator to connect
+
+
+- Bugs
+[X]	- Network.__dir__ should return also types
+[X]	- Do not allow repeated connections
+[X]	- > and < operators should ensure direction matches with arrows
+
+[X]	- net.desc[tab]ription (description in __dir__)
+[X]	- net.code() adds the description if it is not empty
+[X]	- code() uses numeric ports (like AudioSink.1) as attributes, instead of subscripts (first char should be letter or _)
+	- code() always returns ['___'] for config parameters.
+[X]	- Adding an existing processing name asserts (c++), should raise
+[X]	- When code uses subscripts it still adds the attribute point
+[X]	- net.p > net.s, casca a CLAM
+[X]	- net.p._outports > net.s._inports: retorn random, mai no fa res
+		- XSR: Not implemented this way, correct way to use it is:
+			net.p > net.s._inports
+[X]	- net.p._outports[::2] > net.s._inports[::2] nomes conecta el primer (tenint 4 ports)
+[X]	- description uses repr
+	- c = net.p._config; net.p._config = c  # detect and RunTimeError instead of segfault
+		- XSR: Segfault caused by programming error, now fixed.
+		  Should throw error instead?
+		
+
+== Config ==
+
+- Proxyfy configs
+[X]	- Copy all Configuration as Dummy_ConfigurationProxy (and tests)
+[X]	- Remove __dir__ and attribute access from Dummy_ConfigurationProxy
+[X]	- Configuration delegates to the Proxy, accepts a proxy in __init__
+[X]	- TypeError on different type than the default value
+- Clam Configs
+	- Setting attributes:
+[X]		- Missing char attributes (need to figure out how to do)
+			- DGG: see the list of types in Configurator, if char is supported it should be a kind of short int not 'c', 
+			  in any case i doubt that we need such type for this first stage, i would remove it until we get type plugins.
+			- XSR: removed for now
+[X]		- Missing double attributes (python doesn't distinguish between float/double)
+			- DGG: see the mail, the configuration slot drives which is the type not the python value
+[X]		- Raising TypeError on wrong type
+[X]		- Raising KeyError on wrong attribute name
+[X]	- keys()
+- Configuration in net.code()
+	- DummyProxy
+[X]		- configproxy.nonDefault(attrib) returns true if value of attribute i differs from the default
+	- Configuration
+[X]		- optional code() parameter fullConfig (False by default to keep) that always expands configuration values
+[X]		- in code(), use nonDefault() to print modified configuration prameters when not fullConfig
+	- Clam
+[X]		- obtain a default constructed config (Species()?)
+- Configuration use cases
+	- With just a configuration (done?)
+[X]	- With a processing
+[X]		- test value change
+[X]		- test processing changed (in a AudioSource, the number of outputs)
+[X]	- with a processing but holding configuration (calling hold() ) 
+[X]		- test that the configuration changes but not the processing
+[X]		- test that apply() actually aplies
+- Type plugins for 
+[X]	- Base class:
+		- take Configurator as reference
+			- static function to access the list of plugins
+			- base constructor adds 'this' to the list
+		- defines the interface (different from Configurator)
+			- accept(config, slot) says if the plugin works for the attribute
+			- set(config, slot, pyobject) sets the value for the attribute
+			- pyobject get(config, slot) obtains the value for the attribute
+			- ... (future interface as we need it, isDefault..., see below)
+
+- Subconfigs: net.processing._config.subconfig.param
+[X]	- Dummy
+[X]	- Configuration
+	- Clam
+- Optionality
+	- What
+[X]		- Attributes being None by default, get returns none
+[X]		- Set to None -> get retorna None
+[X]		- Being none set to something -> adds the attribute in clam
+	- Where
+[X]		- Dummy
+[X]		- Configuration
+		- Clam
+			- Pending revision of DynamicType methods
+
+
+
+- Widget
+	- QTermWidget
+		- grep metodes de k3process i pty
+		- mockup
+	- ipython
+		- mockup d'stdin, stdout per interceptar IPShell
+
+
+- Proxy accesor to say whether we can play the network (see conditions in NetworkEditor)
+- Proxy accessor for the conditions which does not meet.
+- Network raises if play and conditions do not meet
+- Network accessor for ok to run and why not
+- Network accessors to status (isPlaying, isStoped, isPaused)
+- Processing accessor to configuration errors
+- Not tested Configuration.hold/apply in Dummy
++ Turn basic configuration plugins into a c++ template (with few specialized functions)
+- Configuration parameters for other basic types (unsigned, long, short, char.... see the ones in Configurator and in StorageAsLeaf)
+- Configuration parameters for CLAM basic types: CLAM::Enum, CLAM::Text, CLAM::InFilename... (see Configurator)
+- Add DynamicTypes (hierarchy)
+- connectProcessings, connectWithConnector, connectWithConnectors, why are they there when you tab a connector?
+- Moure helpers de test a un modul unic
+- Moure Excepcions comunes de Clam i Dummy to a common module (Network if feasible)
+- Implement net.source[2::2] > net.sink[2::2] (gives key error, works with _inports and _outports)
+- Implement net.source._outports.disconnect()
+- Implement net.source.disconnect()
++ net.processing.[tab] should include 'name' as it includes 'type'
+- code() generates net.proc.in, does not even compile, 'in' is a python keywords, same for 'as', 'for', 'is'....
+	- Future proof way to idenify them: http://docs.python.org/release/2.7/library/keyword.html
+- Obtaining type metadata (category, description, icon...) (how? attributes, dictionary...)
+- How to know whether the configuration failed
+- Obtaining the configuration error
+- Case setBackend("Whatever") raises "unknown backend, try with..."
+- Case insensitive backend names?
+- When setBackend fails because errors, tell the problem (Player::NonWorkingReason)
+
+
+
+
+
+

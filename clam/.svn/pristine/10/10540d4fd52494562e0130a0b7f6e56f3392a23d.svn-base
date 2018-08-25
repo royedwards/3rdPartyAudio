@@ -1,0 +1,91 @@
+- General controls
+	# with an implicit network would be free functions.
+	network.load("filename.clamnetwork")
+	network.save("filename.clamnetwork")
+	network.xml()     #  dumps xml of the network
+	network.code()    #  dumps the Python code to get it
+
+- Transport
+	# with an implicit network would be free functions.
+	network.play()
+	network.stop()
+	network.pause()
+	network.isStopped()
+	network.isPlaying()
+	network.isReady()
+	network.whyIsNotReady # TOREVIEW
+
+- Processings
+	net.proc = "ProcessingType"  # creation
+	net.proc = net.types.ProcessingType # creation tab completion friendly types
+	net['proc'] = "ProcessingType"   # creation for non proper id names
+	del net.proc              # removal
+	net.proc.name = "newname" # renaming
+	net.proc.name   # accessing the name
+	net.proc.type   # accessing the type
+
+	# not yet implemented
+	net.proc2 = proc.clone()
+	net.clone(net.proc1, net.proc2...) # copy with inter connections
+
+- Processing Configuration
+	# changes on config are inmediate unless done under 'with' statement
+	net.proc.ConfigField = newvalue
+	net.proc["ConfigField"] = newvalue
+	net.proc._config["ConfigField"] = newvalue
+	net.proc._config.ConfigField = newvalue
+	# analog options for getters
+
+	# differing reconfiguration until all values are set
+	with net.proc._config as c :
+		c.ConfigField = newvalue
+		c.ConfigField2 = othervalue
+
+	# deattached configs
+	config = Config("ProcessingType")
+	config = proc._config.clone()
+
+	# not yet implemented
+	proc.configErrors
+
+- Obtaining ports/controls
+	proc.Output
+	proc['Output']
+	proc._outports['Output']
+	proc._outports.Output
+	proc._outports[4] # Fith outport (Zero based)
+	proc[2:4] # undefined (in-out, port-control) but useful, see 'Connecting'
+	proc.Output.name # name
+	proc.Output.kind # "Port" or "Control"
+	proc.Output.direction # "In" or "Out"
+	proc.Output.index # order within host and same kind and direction
+	proc.Output.type # data type it handles
+	proc.Output.peers # returns a list of connected peers
+	proc.Output.host # the processing that hosts it
+	proc.Output.peers[0].host
+
+- Connecting
+	proc1.OutPort1 > proc2.InPort4  # direct port connection
+	proc1 > proc2  # tries first outport with first inport, second with second, and so on, then with controls
+	proc1._outports > proc2  # same as above but restricst to inports
+	proc1._outports[1::2] > proc2  # connect indexes 1,3,5... with 0,1,2...
+	proc1.OutPort1 > proc2 # connects OutPort1 to as many inports in proc2 it can connect to
+	proc1[1::2] > proc2  # arrow defines the first term as output, defaults to ports
+	proc1[1::2] > proc2._incontrols  # arrow defines the first term as output, peer defines it as control
+	xxx < yyy #  is equivalent but checks the direction is reversed (xxx input, yyy output)
+	xxx.connect(yyy) #  is equivalent but no direction checking is done, unless they are two processings, then forward is considered
+
+- Disconnect controls/ports
+	proc.Output.disconnect(proc2.Input)
+	proc.Output.disconnect() # any connected
+	proc.Input.disconnect() # any connected
+	for port in proc._inports : port.disconnect()
+
+	# not yet implemented
+	proc.disconnect() # any connection of any kind of proc
+	proc1.disconnect(proc2) # any connection of any kind between them
+	proc1.disconnect(proc2._incontrols) # any control connection from proc1 to proc2
+	proc1._incontrols.disconnect() # any connection to proc1 incontrols
+	proc1 / proc2
+
+

@@ -1,0 +1,105 @@
+#!/usr/bin/python
+
+from PySide import QtGui, QtCore
+import ipyclam.ui.PySide as ui
+import sys
+import ipyclam
+
+class ipyclam_controller(QtGui.QWidget):
+	def __init__(self):
+		super(ipyclam_controller, self).__init__()
+		self.createNetwork()
+
+		self.grid = QtGui.QGridLayout()
+		self.setLayout(self.grid)
+
+		def addButton(text, action, x, y) :
+			button = QtGui.QPushButton(text)
+			self.connect(button, QtCore.SIGNAL('clicked()'), action)
+			self.grid.addWidget(button, x, y)
+			return button
+
+		addButton("Play", self.play, 0, 0)
+		addButton("Pause", self.pause, 0,1)
+		addButton("Stop", self.stop, 0,2)
+		addButton("Code", self.showCode, 1,0)
+
+		self.box = QtGui.QComboBox()
+		processingsList = dir(self._network)
+		processingsList.remove("description")
+		self.box.addItems(processingsList)
+		self.connect(self.box, QtCore.SIGNAL('activated(int)'), self.setConfigProperty)
+		self.grid.addWidget(self.box, 1, 0)
+
+		self.configButton = QtGui.QPushButton("Configure")
+		self.configButton.setProperty("clamConfiguration", self.box.currentText())
+		self.grid.addWidget(self.configButton, 1, 2)
+
+		self.ui = ui.loadUi("SMSTransposition.ui")
+		self.setMinimumWidth(600)
+		self.setMinimumHeight(600)
+		self.grid.addWidget(self.ui, 2, 0, 10, 3)
+
+		self._network.bindUi(self)
+
+	def createNetwork(self):
+		net = ipyclam.Network( ipyclam.Clam_Engine() )
+		net.backend = "JACK"
+#		net.backend = "PortAudio"
+		net.Input = 'AudioSource'
+		net.SMSAnalysisCore = 'SMSAnalysisCore'
+		net.SMSSynthesis_0 = 'SMSSynthesis'
+		net.SMSSynthesis_1 = 'SMSSynthesis'
+		net.SMSTranspose_0 = 'SMSTranspose'
+		net.SMSTranspose_1 = 'SMSTranspose'
+		net.Semitones_0 = 'OutControlSender'
+		net.Semitones_0.Min = -36
+		net.Semitones_0.Max = 36
+		net.Semitones_0.Step = 1
+		net.Semitones_1 = 'OutControlSender'
+		net.Semitones_1.Min = -36
+		net.Semitones_1.Max = 36
+		net.Semitones_1.Step = 1
+		net.DryOutput = 'AudioSink'
+		net.Transposed_0 = 'AudioSink'
+		net.Transposed_1 = 'AudioSink'
+		net.Input["1"] > net.SMSAnalysisCore["Input Audio"]
+		net.SMSAnalysisCore["Sinusoidal Peaks"] > net.SMSTranspose_0["In SpectralPeaks"]
+		net.SMSAnalysisCore["Sinusoidal Peaks"] > net.SMSTranspose_1["In SpectralPeaks"]
+		net.SMSAnalysisCore["Residual Spectrum"] > net.SMSSynthesis_0.InputResSpectrum
+		net.SMSAnalysisCore["Residual Spectrum"] > net.SMSSynthesis_1.InputResSpectrum
+		net.Input > net.DryOutput
+		net.SMSSynthesis_0.OutputAudio > net.Transposed_0["1"]
+		net.SMSSynthesis_1.OutputAudio > net.Transposed_1["1"]
+		net.SMSTranspose_0["Out SpectralPeaks"] > net.SMSSynthesis_0.InputSinPeaks
+		net.SMSTranspose_1["Out SpectralPeaks"] > net.SMSSynthesis_1.InputSinPeaks
+		net.Semitones_0.out > net.SMSTranspose_0["Transpose amount"]
+		net.Semitones_1.out > net.SMSTranspose_1["Transpose amount"]
+		self._network = net
+
+	def showCode(self):
+		QtGui.QMessageBox.about(self, "Code to build the network", self._network.code())
+
+	def play(self):
+		self._network.play()
+		print 'Playing...'
+
+	def pause(self):
+		self._network.pause()
+		print 'Paused'
+
+	def stop(self):
+		self._network.stop()
+		print 'Stopped'
+
+	def setConfigProperty(self):
+		self.configButton = QtGui.QPushButton("Configure")
+		self.configButton.setProperty("clamConfiguration", self.box.currentText())
+		self.grid.addWidget(self.configButton, 1, 2)
+		self._network.bindUi(self.configButton)
+
+if __name__ == "__main__" :
+	app = QtGui.QApplication(sys.argv)
+	w = ipyclam_controller()
+	w.show()
+	app.exec_()

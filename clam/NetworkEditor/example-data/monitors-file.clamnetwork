@@ -1,0 +1,267 @@
+<network id="Unnamed">
+
+  <processing id="AudioSink_0" position="856,19" size="141,111" type="AudioSink" />
+
+  <processing id="MonoAudioFileReader_0" position="33,37" size="246,64" type="MonoAudioFileReader">
+    <SourceFile>example-data/Guillamino_CitiusAltiusFortius.mp3</SourceFile>
+    <SelectedChannel>0</SelectedChannel>
+    <Loop>1</Loop>
+  </processing>
+
+  <processing id="Oscilloscope_0" position="159,243" size="165,226" type="Oscilloscope" />
+
+  <processing id="Oscilloscope_1" position="728,242" size="165,232" type="Oscilloscope" />
+
+  <processing id="OutControlSender_0" position="158,457" size="682,91" type="OutControlSender">
+    <Min>-50</Min>
+    <Default>0</Default>
+    <Max>550</Max>
+    <Step>1</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+  </processing>
+
+  <processing id="PeakView_0" position="154,644" size="710,128" type="PeakView" />
+
+  <processing id="PeakView_1" position="155,531" size="706,123" type="PeakView" />
+
+  <processing id="Robotization factor" position="494,-2" size="221,91" type="OutControlSender">
+    <Min>0</Min>
+    <Default>50</Default>
+    <Max>100</Max>
+    <Step>0.5</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+  </processing>
+
+  <processing id="Robotization_0" position="345,133" size="165,64" type="Robotization">
+    <PreserveOuts>0</PreserveOuts>
+  </processing>
+
+  <processing id="SMSAnalysisCore_0" position="62,125" size="207,110" type="SMSAnalysisCore">
+    <SinSpectralAnalysis>
+      <WindowGenerator>
+        <Type>Hamming</Type>
+        <Size>2049</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-1024</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>2048</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>2048</prFFTSize>
+      <prWindowSize>2049</prWindowSize>
+      <prWindowType>Hamming</prWindowType>
+    </SinSpectralAnalysis>
+    <ResSpectralAnalysis>
+      <WindowGenerator>
+        <Type>BlackmanHarris92</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-512</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>1024</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>1024</prFFTSize>
+      <prWindowSize>1025</prWindowSize>
+      <prWindowType>BlackmanHarris92</prWindowType>
+    </ResSpectralAnalysis>
+    <PeakDetect>
+      <MaxPeaks>500</MaxPeaks>
+      <MagThreshold>-60</MagThreshold>
+      <MaxFreq>8000</MaxFreq>
+    </PeakDetect>
+    <FundFreqDetect>
+      <ReferenceFundFreq>1000</ReferenceFundFreq>
+      <LowestFundFreq>35</LowestFundFreq>
+      <HighestFundFreq>1500</HighestFundFreq>
+      <MaxCandMagDiff>30</MaxCandMagDiff>
+      <MaxFundFreqError>10</MaxFundFreqError>
+      <PMp>0.5</PMp>
+      <PMq>1.4</PMq>
+      <PMr>0.5</PMr>
+      <MPp>0.5</MPp>
+      <MPq>1.4</MPq>
+      <MPr>0.5</MPr>
+      <PMnPeaks>10</PMnPeaks>
+      <MPnPeaks>10</MPnPeaks>
+      <PMCont>1</PMCont>
+      <MPCont>1</MPCont>
+      <NInt>5</NInt>
+      <NMaxCandidates>40</NMaxCandidates>
+    </FundFreqDetect>
+    <SinTracking>
+      <Threshold>40</Threshold>
+      <nMaxSines>200</nMaxSines>
+      <IsHarmonic>0</IsHarmonic>
+    </SinTracking>
+    <prSamplingRate>44100</prSamplingRate>
+    <prFFTSize>0</prFFTSize>
+    <SynthSineSpectrum>
+      <SpectrumSize>513</SpectrumSize>
+      <SamplingRate>44100</SamplingRate>
+      <ZeroPadding>0</ZeroPadding>
+    </SynthSineSpectrum>
+  </processing>
+
+  <processing id="SMSFreqShift_0" position="344,75" size="170,64" type="SMSFreqShift">
+    <PreserveOuts>0</PreserveOuts>
+  </processing>
+
+  <processing id="SMSSynthesis_0" position="674,61" size="177,110" type="SMSSynthesis">
+    <SynthSineSpectrum>
+      <SpectrumSize>513</SpectrumSize>
+      <SamplingRate>44100</SamplingRate>
+      <ZeroPadding>0</ZeroPadding>
+    </SynthSineSpectrum>
+    <PhaseMan>
+      <MaxSines>100</MaxSines>
+      <SamplingRate>44100</SamplingRate>
+      <Type>Continuation</Type>
+    </PhaseMan>
+    <SpectralSynth>
+      <AnalWindowGenerator>
+        <Type>BlackmanHarris92</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>1</Invert>
+      </AnalWindowGenerator>
+      <SynthWindowGenerator>
+        <Type>Triangular</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NoNormalization</Normalize>
+        <Invert>0</Invert>
+      </SynthWindowGenerator>
+      <CircularShift>
+        <Amount>512</Amount>
+      </CircularShift>
+      <IFFT>
+        <AudioSize>1024</AudioSize>
+      </IFFT>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <Residual>0</Residual>
+      <prAnalWindowSize>1025</prAnalWindowSize>
+      <prAnalWindowType>BlackmanHarris92</prAnalWindowType>
+      <prHopSize>512</prHopSize>
+    </SpectralSynth>
+    <OverlapAddSin>
+      <FrameSize>512</FrameSize>
+    </OverlapAddSin>
+    <OverlapAddRes>
+      <FrameSize>512</FrameSize>
+    </OverlapAddRes>
+    <OverlapAddGlobal>
+      <FrameSize>512</FrameSize>
+    </OverlapAddGlobal>
+    <prSamplingRate>0</prSamplingRate>
+  </processing>
+
+  <processing id="SpectrumView_0" position="305,244" size="426,109" type="SpectrumView" />
+
+  <processing id="SpectrumView_1" position="304,348" size="428,118" type="SpectrumView" />
+
+  <processing id="Vumeter_0" position="49,242" size="130,537" type="Vumeter" />
+
+  <processing id="Vumeter_1" position="863,242" size="130,538" type="Vumeter" />
+
+  <port_connection>
+    <out>MonoAudioFileReader_0.Samples Read</out>
+    <in>Vumeter_0.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader_0.Samples Read</out>
+    <in>Oscilloscope_0.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader_0.Samples Read</out>
+    <in>SMSAnalysisCore_0.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Robotization_0.Out Spectrum</out>
+    <in>SMSSynthesis_0.InputResSpectrum</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Residual Branch Spectrum</out>
+    <in>SpectrumView_0.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Sinusoidal Peaks</out>
+    <in>SMSFreqShift_0.In SpectralPeaks</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Sinusoidal Peaks</out>
+    <in>PeakView_1.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Residual Spectrum</out>
+    <in>Robotization_0.In Spectrum</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSFreqShift_0.Out SpectralPeaks</out>
+    <in>SMSSynthesis_0.InputSinPeaks</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSFreqShift_0.Out SpectralPeaks</out>
+    <in>PeakView_0.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputSpectrum</out>
+    <in>SpectrumView_1.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputAudio</out>
+    <in>AudioSink_0.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputAudio</out>
+    <in>Oscilloscope_1.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputAudio</out>
+    <in>Vumeter_1.Input</in>
+  </port_connection>
+
+  <control_connection>
+    <out>OutControlSender_0.out</out>
+    <in>SMSFreqShift_0.Amount</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Robotization factor.out</out>
+    <in>Robotization_0.Robotization factor</in>
+  </control_connection>
+
+</network>

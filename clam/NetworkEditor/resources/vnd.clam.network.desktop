@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=MimeType
+MimeType=application/vnd.clam.network
+Icon=/usr/share/networkeditor/NetworkEditor-icon.svg
+Patterns=*.clamnetwork
+Comment=CLAM Processing Network
+Comment[ca]=Xarxa de processat de CLAM
+Comment[es]=Malla de processado de CLAM

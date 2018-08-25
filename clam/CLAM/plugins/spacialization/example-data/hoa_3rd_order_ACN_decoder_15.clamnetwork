@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<network clamVersion="1.4.1" id="Unnamed">
+
+  <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</description>
+
+  <processing id="AudioSink" position="565,100" size="128,270" type="AudioSink">
+    <NSinks>15</NSinks>
+  </processing>
+
+  <processing id="AudioSource" position="11,96" size="138,286" type="AudioSource">
+    <NSources>16</NSources>
+  </processing>
+
+  <processing id="Hoa2RegularSpeakerArray" position="250,92" size="228,286" type="Hoa2RegularSpeakerArray">
+    <Order>3</Order>
+    <SpeakerLayout>layouts/15_audiolab.layout</SpeakerLayout>
+    <IgnoreLabels>1</IgnoreLabels>
+    <DecodingCriteria>In-phase 2D</DecodingCriteria>
+  </processing>
+
+  <port_connection>
+    <out>AudioSource.1</out>
+    <in>Hoa2RegularSpeakerArray.W</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.2</out>
+    <in>Hoa2RegularSpeakerArray.Y</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.3</out>
+    <in>Hoa2RegularSpeakerArray.Z</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.4</out>
+    <in>Hoa2RegularSpeakerArray.X</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.5</out>
+    <in>Hoa2RegularSpeakerArray.V</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.6</out>
+    <in>Hoa2RegularSpeakerArray.T</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.7</out>
+    <in>Hoa2RegularSpeakerArray.R</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.8</out>
+    <in>Hoa2RegularSpeakerArray.S</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.9</out>
+    <in>Hoa2RegularSpeakerArray.U</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.10</out>
+    <in>Hoa2RegularSpeakerArray.Q</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.11</out>
+    <in>Hoa2RegularSpeakerArray.O</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.12</out>
+    <in>Hoa2RegularSpeakerArray.M</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.13</out>
+    <in>Hoa2RegularSpeakerArray.K</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.14</out>
+    <in>Hoa2RegularSpeakerArray.L</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.15</out>
+    <in>Hoa2RegularSpeakerArray.P</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioSource.16</out>
+    <in>Hoa2RegularSpeakerArray.N</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.01</out>
+    <in>AudioSink.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.02</out>
+    <in>AudioSink.2</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.03</out>
+    <in>AudioSink.3</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.04</out>
+    <in>AudioSink.4</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.05</out>
+    <in>AudioSink.5</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.06</out>
+    <in>AudioSink.6</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.07</out>
+    <in>AudioSink.7</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.08</out>
+    <in>AudioSink.8</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.09</out>
+    <in>AudioSink.9</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.10</out>
+    <in>AudioSink.10</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.11</out>
+    <in>AudioSink.11</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.12</out>
+    <in>AudioSink.12</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.13</out>
+    <in>AudioSink.13</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.14</out>
+    <in>AudioSink.14</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Hoa2RegularSpeakerArray.15</out>
+    <in>AudioSink.15</in>
+  </port_connection>
+
+</network>

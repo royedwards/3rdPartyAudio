@@ -1,0 +1,287 @@
+#!/usr/bin/python
+import os
+import glob
+import sys
+
+options = Variables('options.cache', ARGUMENTS)
+options.Add(PathVariable('prefix', 'The prefix where the application will be installed', ''))
+options.Add(PathVariable('clam_prefix', 'The prefix where CLAM was installed', ''))
+options.Add(BoolVariable('release', 'Enabling compiler optimizations', 'no') )
+options.Add(BoolVariable('verbose', 'Display the full command line instead a short command description', 'no') )
+options.Add(PathVariable('external_dll_path', '(Windows only) The place where the NSIS packager takes the installed DLL from', '.'))
+options.Add(BoolVariable('semweb', 'An extractor that requires python (provisional option)', 'no'))
+if sys.platform=="linux2" :
+	options.Add(BoolVariable('crossmingw', 'Using MinGW crosscompiler mode', 'no') )
+
+def scanFiles(pattern, paths) :
+	files = []
+	for path in paths :
+		files+=glob.glob(os.path.join(path,pattern))
+	return files
+
+def recursiveDirs(root) :
+	return filter( (lambda a : a.rfind( ".svn")==-1 ),  [ a[0] for a in os.walk(root)]  )
+
+def unique(list) :
+	return dict.fromkeys(list).keys()
+
+toolchain='default'
+if sys.platform == 'win32': toolchain = 'mingw'
+env = Environment(ENV=os.environ, tools=[toolchain], options=options)
+options.Save('options.cache', env)
+Help(options.GenerateHelpText(env))
+
+env.SConsignFile() # Single signature file
+
+crosscompiling = env.has_key("crossmingw") and env["crossmingw"]
+isWindowsPlatform = sys.platform=='win32' or crosscompiling
+isLinuxPlatform = sys.platform=='linux2' and not crosscompiling
+isDarwinPlatform = sys.platform=='darwin'
+
+CLAMInstallDir = env['clam_prefix']
+clam_sconstoolspath = os.path.join(CLAMInstallDir,'share','clam','sconstools')
+CLAMVmQtPath = 'vmqt'
+
+env.Tool('qt4', toolpath=[clam_sconstoolspath])
+env.Tool('clam', toolpath=[clam_sconstoolspath])
+env.Tool('nsis', toolpath=[clam_sconstoolspath])
+if sys.platform=='darwin' : env.Tool('bundle', toolpath=[clam_sconstoolspath])
+env.Tool('dmg', toolpath=[clam_sconstoolspath])
+if crosscompiling :
+	env.Tool('crossmingw', toolpath=[clam_sconstoolspath])
+sys.path.append(clam_sconstoolspath)
+import versionInfo
+version, fullVersion = versionInfo.versionFromLocalInfo("Annotator")
+print "Version: ", version
+print "Package version: ", fullVersion
+versionInfo.generateVersionSources(os.path.join('src','MusicAnnotatorVersion'), "MusicAnnotator", version, fullVersion)
+
+
+env['CXXFILESUFFIX'] = '.cxx'
+env['QT4_UICDECLSUFFIX'] = '.hxx'
+env.moveIntermediateInto('generated')
+env.activateColorCommandLine()
+if not env['verbose']: env.ClamQuietCompilation()
+
+env.EnableClamModules([
+	'clam_core',
+	'clam_audioio',
+	'clam_processing',
+	], CLAMInstallDir)
+
+env.EnableQt4Modules([
+	'QtCore',
+	'QtGui',
+	'QtOpenGL',
+	],
+	debug=False,
+	crosscompiling=crosscompiling,
+	)
+
+mainSources = {
+	'Annotator' : os.path.join('src','main.cxx'),
+	'ClamExtractorExample' : os.path.join('src','ClamExtractorExample.cxx'),
+}
+
+sourcePaths = [
+	os.path.join('src'),
+	os.path.join('src','generated'),
+	os.path.join('src','InstantViews'),
+	os.path.join('src','InstantViews','generated'),
+]
+extraPaths = []
+extraPaths += recursiveDirs(CLAMVmQtPath+"/plot")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/render")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/data")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/util")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/player")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/misc")
+extraPaths += recursiveDirs(CLAMVmQtPath+"/widget")
+extraPaths += [
+	CLAMInstallDir+'/include',
+	CLAMInstallDir+'/include/CLAM', # KLUDGE to keep old style includes
+	os.path.join('SimacServicesClient'),
+	os.path.join('SimacServicesClient','generated'),
+]
+
+includePaths = sourcePaths + extraPaths
+
+sources = scanFiles('*.cxx', sourcePaths)
+sources = filter( (lambda a : a.rfind( "moc_")==-1 ),  sources )
+sources = filter( (lambda a : a.rfind( "qrc_")==-1 ),  sources )
+sources = unique(sources)
+for mainSource in mainSources.values() :
+	sources.remove(mainSource)
+
+qrcfiles = scanFiles("*.qrc", sourcePaths)
+if qrcfiles : sources += env.Qrc(source=qrcfiles)
+
+uifiles = scanFiles("*.ui", sourcePaths)
+if uifiles: uiheaders = env.Uic4(source=uifiles)
+
+if isWindowsPlatform :
+	sources += env.RES(source=["resources/Annotator.rc"])
+
+env.Append(CPPPATH=includePaths)
+env.Append(LIBPATH=[CLAMVmQtPath])
+env.Prepend(LIBS="clam_vmqt4")
+
+if sys.platform=='darwin' :
+	env.Append(CPPFLAGS='-DRESOURCES_BASE="\\"Annotator.app/Contents/Resources\\""')
+else :
+	env.Append(CPPFLAGS='-DRESOURCES_BASE="\\"' + env['prefix'] + '/share/annotator\\""')
+if sys.platform!='win32' :
+	# TODO: This should not be hardcoded neither prefix (because package intall)
+	env.Append(CPPFLAGS='-DDATA_EXAMPLES_PATH="\\"%s\\""'%env['prefix'] + '/share/annotator/example-data')
+
+if env['release'] :
+	env.Append( CCFLAGS=['-g','-O3','-fomit-frame-pointer','-Wall'] )
+else :
+	env.Append( CCFLAGS=['-g','-O3','-Wall'] )
+
+#commonObjects = env.StaticLibrary(target="annotator", source=sources)
+programs = [ env.Program(target=program, source = [main] + sources)
+	for program, main in mainSources.items()]
+
+example_data = [
+	'example-data/Chords.pro'
+	]
+
+pluginDefines=['-DQT_PLUGIN','-DQT_NO_DEBUG','-DQDESIGNER_EXPORT_WIDGETS','-D_REENTRANT']
+env.AppendUnique(CPPFLAGS=pluginDefines)
+
+chordSources = scanFiles("*.cxx", ["src/ChordExtractor"])
+chordSources = filter ( (lambda a : a.rfind( "Test")==-1 ),  chordSources )
+chordSources = filter ( (lambda a : a.rfind( "cppunit")==-1 ),  chordSources )
+
+programs += [ env.Program(target='ChordExtractor', source = chordSources) ]
+
+onsetSources = scanFiles("*.cpp", ["src/OnsetExtractor"])
+onsetSources = filter ( (lambda a : a.rfind( "Test")==-1 ),  onsetSources )
+onsetSources = filter ( (lambda a : a.rfind( "cppunit")==-1 ),  onsetSources )
+fftwlib = "fftw3"
+fftwlibpath = [os.path.join(env['prefix'],'lib')]
+sndfilelib = 'sndfile'
+programs += [ env.Program(target='OnsetExtractorCore', source = onsetSources, LIBS=[fftwlib,sndfilelib], LIBPATH=fftwlibpath) ]
+programs += [ 'OnsetExtractor' ]
+
+env.Uic4(source="SimacServicesClient/GUI.ui")
+bocaClientSources = [
+	"SimacServicesClient/BocaClientMain.cxx",
+	env.Moc4("SimacServicesClient/BocaClientGui.hxx"),
+	"SimacServicesClient/BocaTaskRunner.cxx",
+]
+programs += [ env.Program(target="BocaClient", source = bocaClientSources) ]
+
+if env['semweb']:
+	# Jun: added for test
+	# to embed Python scripts in C++ code, Python.h needs to be included,
+	#TODO: replace the absolute path with an option
+#	env.AppendUnique(CPPPATH=['C:/Python25/include')]
+	env.AppendUnique(CPPPATH= ['/usr/include/python2.5'])
+#	env.Append(LIBPATH=['C:/Python25/libs'])
+#	env.Prepend(LIBS="python25")
+	env.Prepend(LIBS="python2.5")
+	semwebSources = scanFiles("*.cxx", ["src/SemWebExtractor"])
+	semwebSources = filter ( (lambda a : a.rfind( "Test")==-1 ),  semwebSources )
+	semwebSources = filter ( (lambda a : a.rfind( "cppunit")==-1 ),  semwebSources )
+	clamlibpath = [os.path.join(env['prefix'],'lib')]
+
+#	programs += [ env.Program(target='SemWebExtractor', source = semwebSources, LIBPATH=[clamlibpath,pythonlibpath]) ]  #, LIBPATH=pythonlibpath
+	programs += [ env.Program(target='SemWebExtractor', source = semwebSources) ]
+
+
+
+manpages = glob.glob('resources/man/man1/*.1')
+
+tsfiles = scanFiles("*.ts", ["src/i18n/"])
+translatableSources = scanFiles('*.cxx', sourcePaths);
+translatableSources+= scanFiles('*.hxx', sourcePaths);
+translatableSources+= scanFiles('*.ui', sourcePaths);
+translatableSources = filter( (lambda a : a.rfind( "generated/")==-1 ),  translatableSources )
+translations = []
+if len(tsfiles) :
+	# Manual step: lupdate-qt4 *xx *ui -ts NetworkEditor_ca.ts
+	#tsNodes = env.Ts(target=tsfiles, source = translatableSources)
+	# TODO: move those settings to the qt4 tool
+	#env.Precious(tsNodes) # Do not remove it until really regenerated
+	#env.NoClean(tsNodes) # They are not just generated but also user edited
+	translations = env.Qm(source = tsfiles)
+
+examples = []
+for ext in ['pro', 'sc']:
+	examples += scanFiles('*.%s'%ext, ['example-data'])
+
+song_examples = []
+for ext in ['pool', 'chords', 'mp3', 'wav', 'ogg']:
+	song_examples += scanFiles('*.%s'%ext, ['example-data/SongsTest'])
+
+menuEntries = glob.glob('resources/*.desktop')
+
+installation = {
+	'/bin' : programs,
+	'/share/applications': menuEntries,
+	'/share/man/man1' : manpages,
+	'/share/annotator/i18n': translations,
+	'/share/annotator/example-data': examples,
+	'/share/annotator/example-data/SongsTest': song_examples,
+}
+
+installTargets = [
+	env.Install( env['prefix']+path, files ) for path, files in installation.items() ]
+
+def absolutePosixPathToWine(dir) :
+	return 'z:'+'\\\\'.join(dir.split('/'))
+
+if isWindowsPlatform : 
+	winqtdir=env['QTDIR']
+	if crosscompiling : env['NSIS_MAKENSIS'] = 'wine ~/.wine/dosdevices/c:/Program\ Files/NSIS/makensis'
+	if crosscompiling : winqtdir = absolutePosixPathToWine(winqtdir)
+	externalDllPath = env['external_dll_path']
+	if crosscompiling : externalDllPath = absolutePosixPathToWine(externalDllPath)
+	winclampath = CLAMInstallDir
+	if crosscompiling : winclampath = absolutePosixPathToWine(winclampath)
+	if crosscompiling :
+		env.AddPostAction(programs, env.Action(["i586-mingw32msvc-strip $TARGET"]))
+	env.Append(NSIS_OPTIONS=['/DVERSION=%s' % fullVersion ])
+	env.Append(NSIS_OPTIONS=['/DQTDIR=%s'%winqtdir ])
+	env.Append(NSIS_OPTIONS=['/DEXTERNALDLLDIR=%s' % externalDllPath ])
+	env.Append(NSIS_OPTIONS=['/DCLAMINSTALLDIR=%s' % winclampath ])
+	# Get the visual studio runtimes path
+	for vcRuntimeDir in os.environ['PATH'].split(";") :
+		vcRuntimeDir = os.path.normpath(vcRuntimeDir)
+		if os.access(os.path.join(vcRuntimeDir,"msvcr71.dll"),os.R_OK) :
+			break
+	env.Append(NSIS_OPTIONS=['/DVCRUNTIMEDIR=%s' % vcRuntimeDir ])
+	win_packages = [env.Nsis( source='resources/installer.nsi')]
+	env.Alias('package', win_packages)
+
+if sys.platform=='darwin' :
+	# TODO: Review why those flags were added
+	env.Append(CPPFLAGS='-DRESOURCES_BASE="\\"Annotator.app/Contents/Resources\\""')
+	env.AppendUnique( LINKFLAGS=['-dynamic','-bind_at_load'])
+
+	#TODO install resources
+	installTargets = []
+	
+	mac_bundle = env.Bundle( 
+		BUNDLE_NAME='Annotator', 
+		BUNDLE_BINARIES=programs,
+	#	BUNDLE_RESOURCEDIRS=['foo','bar'],
+		BUNDLE_PLIST='resources/Info.plist',
+		BUNDLE_ICON='resources/CLAM-MusicAnnotator.icns',
+	 )
+	env.Alias('bundle', mac_bundle)
+
+	#TODO mac_bundle should be dependency of Dmga:	
+	arch = os.popen("uname -p").read().strip()
+	mac_packages = env.Dmg('CLAM_Annotator-%s-%s.dmg'% (fullVersion, arch), [
+		env.Dir('Annotator.app/'),
+		env.Dir('example-data/'),
+	]+installTargets )
+	env.Alias('package', mac_packages)
+
+env.Alias('install', installTargets )
+
+env.Default(programs, translations)
+

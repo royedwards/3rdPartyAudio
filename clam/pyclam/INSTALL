@@ -1,0 +1,68 @@
+== Instructions ==
+
+Note: This is still experimental. By now only tested in linux, but all the tools are cross-platform and should also work in mac and windows in a similar way.
+
+=== Tools (assuming a working clam dev environment) ===
+
+Ubuntu hardy (simplest way):
+* Install from standard repos: libboost-python-dev and libboost-python1.34.1
+* This bunch of packages:
+gccxml 0.9: http://ftp.zcu.cz/pub/linux/debian/pool/main/g/gccxml/gccxml_0.9.0+cvs20080525-1_i386.deb
+pygccxml: http://ppa.launchpad.net/eudoxos/ppa/ubuntu/pool/main/p/pygccxml/python-pygccxml_1.0.0-2_i386.deb
+libboost-python-indexing-suite-v2: http://ppa.launchpad.net/eudoxos/ppa/ubuntu/pool/main/p/py++/libboost-python-indexing-v2_1.0.0-2_i386.deb
+py++: http://ppa.launchpad.net/eudoxos/ppa/ubuntu/pool/main/p/py++/python-py++_1.0.0-2_all.deb
+
+
+
+
+Detailed explanation / manual procedure (old):
+# Install Boost.Python. At debian based distros packages named libboost-python-dev and libboost-python1.34.1
+# Download and install[1] Py++ (no package available, at least at standard ubuntu repos[2])
+  Download Py++-0.9.5.zip from https://sourceforge.net/project/showfiles.php?group_id=118209&package_id=157697
+  and execute 'sudo python setup.py install'
+##* Enable indexing suite version v2:
+    PYPLUSPLUS='Py++-0.9.5/indexing_suite_v2/indexing'
+    BOOST_INDEXING='/usr/include/boost/python/suite/indexing'
+    sudo cp $PYPLUSPLUS/* $BOOST_INDEXING/
+# (optional [1]) Get gccxml version 0.9 (Warning: standard debian package at repos usually is about 0.7). I took it from here:  http://ftp.zcu.cz/pub/linux/debian/pool/main/g/gccxml/gccxml_0.9.0+cvs20080525-1_i386.deb, the option is compile it from CVS. Note: I experienced some problems with the very last CVS version, the one from 20080525 is preferred.
+# (optional [1]) Download and install pygccxml[1] (no package available, at least at standard ubuntu repos[2]):
+  Download pygccxml-0.9.5.zip from http://sourceforge.net/project/showfiles.php?group_id=118209&package_id=146545
+  and execute 'sudo python setup.py install'
+
+[1] Only needed for bindings regeneration. Not for compiling.
+[2] Check out this repo https://launchpad.net/~eudoxos/+archive/ppa
+
+=== Compilation ===
+# Patch the CLAM library. At the CLAM source dir, execute: 'patch -p0 < pyclam.patch' and re-install the library (run 'scons install' from CLAM dir).
+# At pyclam dir, run 'scons configure clam_prefix=CLAM_LIBRARY_PATH' to specify the desired CLAM library installation prefix.
+# Run 'generate_binding.py' (will generate a bunch of files at 'src' directory) and then compile the bindings with 'scons' command.
+
+After those steps you should get the clam.so ready to use.
+
+WARNING: At the moment it has been tested sucesfully in ubuntu hardy with a gcc-4.2 version. You could experience some problems with gcc-4.3. Seems there is a problem parsing unistd.h (see or try the error when 'gccxml /usr/include/unistd.h'). With ubuntu jaunty, which has gcc-4.3 as default, may you have to force the use of gcc-4.2 and apply the patch 'jaunty.patch' which forces the py++ script to use gccxml v4.2 and use indexing suite version 1 instead of 2.
+
+=== Use ===
+* Put the clam.so file in a visible place for your scripts (PYTHONPATH or the directory where your scripts are placed).
+* Import the library as usual: 'import clam' or 'from clam import *' as your convenience.
+* Try the examples at examples directory (fft_example.py, playfile.py, etc) and/or check unit tests to have a better idea of how to work with the library.
+* Play interactively with the library from a console with IPython or standard python interpreter.
+
+
+=== Tests ===
+
+Pass the automatic tests
+
+First, checkout the clam test-data repository:
+$ svn co http://clam-project.org/clam_data/trunk clam-test-data
+
+Change dir to CLAM/pyclam/test and configure it with scons providing the following option (no compiling nor installation step is needed):
+
+	* test_data_path --the path to the clam-test-data sandbox (local copy of the repository).
+
+For example:
+
+$ scons configure test_data_path=~/clam-test-data
+
+Then execute unit tests:
+
+$ ./UnitTestsSuite.py

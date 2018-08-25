@@ -1,0 +1,126 @@
+import Connector
+import Configuration
+import Connectors
+
+class NotFound(Exception) : pass
+
+class Processing(object):
+	def __init__(self, name, engine):
+		assert(engine.hasProcessing(name)) # TODO unit test
+		self.__dict__["name"] = name
+		self.__dict__["engine"] = engine
+		self.__dict__["type"] = engine.processingType(name)
+		self.__dict__["_config"] = Configuration.Configuration(
+			engine.processingConfig(self.name))
+		self.__dict__["_inports"] = Connectors.Connectors(
+			engine, name, Connector.Port, Connector.In)
+		self.__dict__["_outports"] = Connectors.Connectors(
+			engine, name, Connector.Port, Connector.Out)
+		self.__dict__["_incontrols"] = Connectors.Connectors(
+			engine, name, Connector.Control, Connector.In)
+		self.__dict__["_outcontrols"] = Connectors.Connectors(
+			engine, name, Connector.Control, Connector.Out)
+
+	def __getitem__(self, key):
+		if type(key) is slice :
+			return Connectors.Connectors(
+				self.__dict__['engine'],
+				self.__dict__['name'],
+				None,
+				None,
+				key)
+
+		if key in dir(self._config):
+			return self._config[key]
+		if key in dir(self._inports):
+			return self._inports[key]
+		if key in dir(self._outports):
+			return self._outports[key]
+		if key in dir(self._incontrols):
+			return self._incontrols[key]
+		if key in dir(self._outcontrols):
+			return self._outcontrols[key]
+		raise KeyError(key)
+
+	def __setitem__(self, name, value):
+		if name == 'name':
+			self.__dict__["engine"].renameProcessing(self.__dict__[name], value)
+			self.__dict__["name"] = value
+			return
+		self._config[name] = value
+
+	def __getattr__(self, name):
+		try:
+			return self.__getitem__(name)
+		except KeyError:
+			raise AttributeError(name)
+
+	def __setattr__(self, name, value):
+		if name is 'type': raise AttributeError("Attribute 'type' is read only")
+		self.__setitem__(name, value)
+
+	def __dir__(self):
+		return (
+			dir(self._config) + 
+			dir(self._inports) + 
+			dir(self._outports) + 
+			dir(self._incontrols) + 
+			dir(self._outcontrols) + 
+			[
+				"type",
+				"name",
+				"connect",
+				"_config", 
+				"_inports", 
+				"_outports", 
+				"_incontrols", 
+				"_outcontrols",
+			]
+		)
+
+	def connect(self, peer):
+
+		def peerConnectorSet(peer) :
+			"""Returns the complementary connector set to peer"""
+			if peer.kind == "Control":
+				if peer.direction == "Out" :
+					return self._incontrols
+				else :
+					return self._outcontrols
+			else :
+				if peer.direction == "Out" :
+					return self._inports
+				else :
+					return self._outports
+
+		if isinstance(peer, Processing):
+			return (
+				(self._outports.connect(peer._inports)) +
+				(self._outcontrols.connect(peer._incontrols)) )
+
+		if isinstance(peer, Connector.Connector) :
+			connectors = peerConnectorSet(peer)
+			return peer.connect(connectors)
+
+		if isinstance(peer, Connectors.Connectors) :
+			connectors = peerConnectorSet(peer)
+			return peer.connect(connectors)
+
+		assert False, "Unexpected connection peer: %s"%peer
+
+	def __gt__(self, peer) :
+		from Exceptions import BadConnectorDirectionOrder
+		if hasattr(peer, 'direction') and peer.direction == "Out" :
+			raise BadConnectorDirectionOrder(
+				"Wrong connectors order: Output > Input")
+		return self.connect(peer)
+
+	def __lt__(self, peer) :
+		from Exceptions import BadConnectorDirectionOrder
+		if hasattr(peer, 'direction') and peer.direction == "In" :
+			raise BadConnectorDirectionOrder(
+				"Wrong connectors order: Input < Output")
+		return peer.connect(self)
+
+
+

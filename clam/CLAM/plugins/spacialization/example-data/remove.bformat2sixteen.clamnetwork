@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<network clamVersion="1.4.1" id="Unnamed">
+
+  <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</description>
+
+  <processing id="AudioAmplifier" position="246,118" size="153,58" type="AudioAmplifier">
+    <MaxGain>1</MaxGain>
+    <InitGain>0</InitGain>
+  </processing>
+
+  <processing id="AudioAmplifier_1" position="228,226" size="168,58" type="AudioAmplifier">
+    <MaxGain>1</MaxGain>
+    <InitGain>0</InitGain>
+  </processing>
+
+  <processing id="AudioAmplifier_2" position="231,335" size="168,58" type="AudioAmplifier">
+    <MaxGain>1</MaxGain>
+    <InitGain>0</InitGain>
+  </processing>
+
+  <processing id="AudioAmplifier_3" position="242,444" size="168,58" type="AudioAmplifier">
+    <MaxGain>1</MaxGain>
+    <InitGain>0</InitGain>
+  </processing>
+
+  <processing id="AudioSink" position="761,234" size="128,286" type="AudioSink">
+    <NSinks>15</NSinks>
+  </processing>
+
+  <processing id="BFormat2Sixteen" position="499,233" size="169,270" type="BFormat2Sixteen"/>
+
+  <processing id="Gain" position="191,-27" size="185,78" type="OutControlSender">
+    <Min>0</Min>
+    <Default>1</Default>
+    <Max>2</Max>
+    <Step>0.01</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+    <Mapping>Linear</Mapping>
+  </processing>
+
+  <processing id="Gain_1" position="461,54" size="185,78" type="OutControlSender">
+    <Min>0</Min>
+    <Default>0.7</Default>
+    <Max>2</Max>
+    <Step>0.01</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+    <Mapping>Linear</Mapping>
+  </processing>
+
+  <processing id="W" position="-2,108" size="128,108" type="AudioSource">
+    <NSources>1</NSources>
+  </processing>
+
+  <processing id="X" position="-5,196" size="128,108" type="AudioSource">
+    <NSources>1</NSources>
+  </processing>
+
+  <processing id="Y" position="-4,298" size="128,108" type="AudioSource">
+    <NSources>1</NSources>
+  </processing>
+
+  <processing id="Z" position="-2,395" size="128,108" type="AudioSource">
+    <NSources>1</NSources>
+  </processing>
+
+  <processing id="out" position="631,127" size="111,84" type="ControlPrinter">
+    <Identifier>ControlPrinter</Identifier>
+    <NumberOfInputs>1</NumberOfInputs>
+    <GuiOnly>1</GuiOnly>
+  </processing>
+
+  <processing id="out_1" position="653,-3" size="111,84" type="ControlPrinter">
+    <Identifier>ControlPrinter</Identifier>
+    <NumberOfInputs>1</NumberOfInputs>
+    <GuiOnly>1</GuiOnly>
+  </processing>
+
+  <port_connection>
+    <out>AudioAmplifier.Audio Output</out>
+    <in>BFormat2Sixteen.W</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioAmplifier_1.Audio Output</out>
+    <in>BFormat2Sixteen.X</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioAmplifier_2.Audio Output</out>
+    <in>BFormat2Sixteen.Y</in>
+  </port_connection>
+
+  <port_connection>
+    <out>AudioAmplifier_3.Audio Output</out>
+    <in>BFormat2Sixteen.Z</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Back Horizontal</out>
+    <in>AudioSink.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Base Back Left</out>
+    <in>AudioSink.2</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Base Back Right</out>
+    <in>AudioSink.3</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Base Front Left</out>
+    <in>AudioSink.4</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Base Front Right</out>
+    <in>AudioSink.5</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Front Horizontal</out>
+    <in>AudioSink.6</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Front Left Horizontal</out>
+    <in>AudioSink.7</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Front Right Horizontal</out>
+    <in>AudioSink.8</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Rear Left Horizontal</out>
+    <in>AudioSink.9</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Rear Right Horizontal</out>
+    <in>AudioSink.10</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Top Back Left</out>
+    <in>AudioSink.11</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Top Back Right</out>
+    <in>AudioSink.12</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Top Front Right</out>
+    <in>AudioSink.13</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Top Front Left</out>
+    <in>AudioSink.14</in>
+  </port_connection>
+
+  <port_connection>
+    <out>BFormat2Sixteen.Top</out>
+    <in>AudioSink.15</in>
+  </port_connection>
+
+  <port_connection>
+    <out>W.1</out>
+    <in>AudioAmplifier.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>X.1</out>
+    <in>AudioAmplifier_1.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Y.1</out>
+    <in>AudioAmplifier_2.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Z.1</out>
+    <in>AudioAmplifier_3.Input Audio</in>
+  </port_connection>
+
+  <control_connection>
+    <out>Gain.out</out>
+    <in>AudioAmplifier.Gain</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Gain.out</out>
+    <in>out_1.In Control</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Gain_1.out</out>
+    <in>AudioAmplifier_1.Gain</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Gain_1.out</out>
+    <in>AudioAmplifier_2.Gain</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Gain_1.out</out>
+    <in>AudioAmplifier_3.Gain</in>
+  </control_connection>
+
+  <control_connection>
+    <out>Gain_1.out</out>
+    <in>out.In Control</in>
+  </control_connection>
+
+</network>

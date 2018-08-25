@@ -1,0 +1,37 @@
+.TH chordata 1 "August 24, 2005" "version 0.3.0" "MISCELLANEOUS"
+.SH NAME
+chordata \- Analyzes chords on audio files
+.SH SYNOPSIS
+.B chordata
+.RB [\| \-b
+.IR backend \|] \ .\|.\|.
+.RB [\| \-\-help \|]
+.SH DESCRIPTION
+.PP
+CLAM Chordata is a chord detection tool that can be used to
+browse the chords of your favourite mp3/ogg/wav music.
+You can freely move arround the song, listening and 
+getting insight of its tonal features by using several
+available views: Chord segments, Chord ranking, Tonnetz,
+Keyspace, Chromatic peaks, PCPgram...
+
+This is an example application of the CLAM framework.
+
+.SH OPTIONS
+.TP
+.BI \-b\   backend
+Try the specified backend if available.
+The program will choose the first specified backend that works.
+If none of the specified backends is available,
+the default sequence of backends will be tried.
+The default sequence is 
+.I jack
+and 
+.I portaudio
+.TP
+.BI \-\-help
+Show the usage information.
+
+.SH AUTHOR
+CLAM development team (clam (at) iua.upf.es)
+

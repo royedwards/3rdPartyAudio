@@ -1,0 +1,49 @@
+<network id="Unnamed">
+
+  <processing id="AudioSink" position="325,85" size="128,111" type="AudioSink" />
+
+  <processing id="AudioSource" position="33,64" size="145,108" type="AudioSource" />
+
+  <processing id="ControlSource_0" position="182,24" size="180,64" type="ControlSource">
+    <MinValue>200</MinValue>
+    <MaxValue>4000</MaxValue>
+    <Step>1</Step>
+    <UnitName>Hz</UnitName>
+  </processing>
+
+  <processing id="Modulator" position="184,152" size="124,64" type="Oscillator">
+    <Frequency>440</Frequency>
+    <Amplitude>1</Amplitude>
+    <ModIndex>1</ModIndex>
+    <Phase>0</Phase>
+    <SamplingRate>44100</SamplingRate>
+  </processing>
+
+  <processing id="Oscillator" position="33,124" size="118,64" type="SimpleOscillator">
+    <Frequency>10</Frequency>
+    <Amplitude>1</Amplitude>
+    <Phase>0</Phase>
+    <SamplingRate>44100</SamplingRate>
+  </processing>
+
+  <port_connection>
+    <out>AudioSource.1</out>
+    <in>Modulator.Input Phase Modulation</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Modulator.Audio Output</out>
+    <in>AudioSink.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Oscillator.Audio Output</out>
+    <in>Modulator.Input Frequency Modulation</in>
+  </port_connection>
+
+  <control_connection>
+    <out>ControlSource_0.output</out>
+    <in>Modulator.Pitch</in>
+  </control_connection>
+
+</network>

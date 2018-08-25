@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<network clamVersion="1.4.1" id="Unnamed">
+
+  <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</description>
+
+  <processing id="AudioSink_0" position="954,78" size="141,111" type="AudioSink">
+    <NSinks>1</NSinks>
+  </processing>
+
+  <processing id="Input 1" position="4,380" size="268,106" type="Oscilloscope"/>
+
+  <processing id="Input 2" position="3,472" size="274,128" type="Oscilloscope"/>
+
+  <processing id="Interpolation Factor" position="455,41" size="207,91" type="OutControlSender">
+    <Min>0</Min>
+    <Default>0.5</Default>
+    <Max>1</Max>
+    <Step>0.01</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+  </processing>
+
+  <processing id="MonoAudioFileReader_0" position="-49,54" size="246,64" type="MonoAudioFileReader">
+    <SourceFile>example-data/jaume-voice.mp3</SourceFile>
+    <SelectedChannel>0</SelectedChannel>
+    <Loop>0</Loop>
+  </processing>
+
+  <processing id="MonoAudioFileReader_1" position="-43,268" size="246,64" type="MonoAudioFileReader">
+    <SourceFile>example-data/Elvis.wav</SourceFile>
+    <SelectedChannel>0</SelectedChannel>
+    <Loop>1</Loop>
+  </processing>
+
+  <processing id="Oscilloscope_1" position="496,468" size="278,129" type="Oscilloscope"/>
+
+  <processing id="PeakView_0" position="3,586" size="272,123" type="PeakView"/>
+
+  <processing id="PeakView_1" position="496,583" size="276,128" type="PeakView"/>
+
+  <processing id="SMSAnalysisCore_0" position="164,29" size="207,110" type="SMSAnalysisCore">
+    <SinSpectralAnalysis>
+      <WindowGenerator>
+        <Type>Hamming</Type>
+        <Size>2049</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-1024</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>2048</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>2048</prFFTSize>
+      <prWindowSize>2049</prWindowSize>
+      <prWindowType>Hamming</prWindowType>
+    </SinSpectralAnalysis>
+    <ResSpectralAnalysis>
+      <WindowGenerator>
+        <Type>BlackmanHarris92</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-512</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>1024</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>1024</prFFTSize>
+      <prWindowSize>1025</prWindowSize>
+      <prWindowType>BlackmanHarris92</prWindowType>
+    </ResSpectralAnalysis>
+    <PeakDetect>
+      <MaxPeaks>500</MaxPeaks>
+      <MagThreshold>-60</MagThreshold>
+      <MaxFreq>8000</MaxFreq>
+    </PeakDetect>
+    <FundFreqDetect>
+      <ReferenceFundFreq>1000</ReferenceFundFreq>
+      <LowestFundFreq>35</LowestFundFreq>
+      <HighestFundFreq>1500</HighestFundFreq>
+      <MaxCandMagDiff>30</MaxCandMagDiff>
+      <MaxFundFreqError>10</MaxFundFreqError>
+      <PMp>0.5</PMp>
+      <PMq>1.4</PMq>
+      <PMr>0.5</PMr>
+      <MPp>0.5</MPp>
+      <MPq>1.4</MPq>
+      <MPr>0.5</MPr>
+      <PMnPeaks>10</PMnPeaks>
+      <MPnPeaks>10</MPnPeaks>
+      <PMCont>1</PMCont>
+      <MPCont>1</MPCont>
+      <NInt>5</NInt>
+      <NMaxCandidates>40</NMaxCandidates>
+    </FundFreqDetect>
+    <SinTracking>
+      <Threshold>40</Threshold>
+      <nMaxSines>200</nMaxSines>
+      <IsHarmonic>0</IsHarmonic>
+    </SinTracking>
+    <prSamplingRate>44100</prSamplingRate>
+    <prFFTSize>0</prFFTSize>
+    <SynthSineSpectrum>
+      <SpectrumSize>513</SpectrumSize>
+      <SamplingRate>44100</SamplingRate>
+      <ZeroPadding>0</ZeroPadding>
+    </SynthSineSpectrum>
+  </processing>
+
+  <processing id="SMSAnalysisCore_1" position="173,265" size="207,110" type="SMSAnalysisCore">
+    <SinSpectralAnalysis>
+      <WindowGenerator>
+        <Type>Hamming</Type>
+        <Size>2049</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-1024</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>2048</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>2048</prFFTSize>
+      <prWindowSize>2049</prWindowSize>
+      <prWindowType>Hamming</prWindowType>
+    </SinSpectralAnalysis>
+    <ResSpectralAnalysis>
+      <WindowGenerator>
+        <Type>BlackmanHarris92</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>0</Invert>
+      </WindowGenerator>
+      <CircularShift>
+        <Amount>-512</Amount>
+      </CircularShift>
+      <FFT>
+        <AudioSize>1024</AudioSize>
+      </FFT>
+      <prHopSize>512</prHopSize>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <prFFTSize>1024</prFFTSize>
+      <prWindowSize>1025</prWindowSize>
+      <prWindowType>BlackmanHarris92</prWindowType>
+    </ResSpectralAnalysis>
+    <PeakDetect>
+      <MaxPeaks>500</MaxPeaks>
+      <MagThreshold>-60</MagThreshold>
+      <MaxFreq>8000</MaxFreq>
+    </PeakDetect>
+    <FundFreqDetect>
+      <ReferenceFundFreq>1000</ReferenceFundFreq>
+      <LowestFundFreq>35</LowestFundFreq>
+      <HighestFundFreq>1500</HighestFundFreq>
+      <MaxCandMagDiff>30</MaxCandMagDiff>
+      <MaxFundFreqError>10</MaxFundFreqError>
+      <PMp>0.5</PMp>
+      <PMq>1.4</PMq>
+      <PMr>0.5</PMr>
+      <MPp>0.5</MPp>
+      <MPq>1.4</MPq>
+      <MPr>0.5</MPr>
+      <PMnPeaks>10</PMnPeaks>
+      <MPnPeaks>10</MPnPeaks>
+      <PMCont>1</PMCont>
+      <MPCont>1</MPCont>
+      <NInt>5</NInt>
+      <NMaxCandidates>40</NMaxCandidates>
+    </FundFreqDetect>
+    <SinTracking>
+      <Threshold>40</Threshold>
+      <nMaxSines>200</nMaxSines>
+      <IsHarmonic>0</IsHarmonic>
+    </SinTracking>
+    <prSamplingRate>44100</prSamplingRate>
+    <prFFTSize>0</prFFTSize>
+    <SynthSineSpectrum>
+      <SpectrumSize>513</SpectrumSize>
+      <SamplingRate>44100</SamplingRate>
+      <ZeroPadding>0</ZeroPadding>
+    </SynthSineSpectrum>
+  </processing>
+
+  <processing id="SMSMorph_0" position="431,139" size="148,126" type="SMSMorph">
+    <IsHarmonic1>1</IsHarmonic1>
+    <IsHarmonic2>1</IsHarmonic2>
+    <UseSpectralShape>0</UseSpectralShape>
+  </processing>
+
+  <processing id="SMSSynthesis_0" position="778,163" size="177,110" type="SMSSynthesis">
+    <SynthSineSpectrum>
+      <SpectrumSize>513</SpectrumSize>
+      <SamplingRate>44100</SamplingRate>
+      <ZeroPadding>0</ZeroPadding>
+    </SynthSineSpectrum>
+    <PhaseMan>
+      <MaxSines>100</MaxSines>
+      <SamplingRate>44100</SamplingRate>
+      <Type>Continuation</Type>
+    </PhaseMan>
+    <SpectralSynth>
+      <AnalWindowGenerator>
+        <Type>BlackmanHarris92</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NormalizationForAnalysis</Normalize>
+        <Invert>1</Invert>
+      </AnalWindowGenerator>
+      <SynthWindowGenerator>
+        <Type>Triangular</Type>
+        <Size>1025</Size>
+        <MaxSize>0</MaxSize>
+        <UseTable>1</UseTable>
+        <Normalize>NoNormalization</Normalize>
+        <Invert>0</Invert>
+      </SynthWindowGenerator>
+      <CircularShift>
+        <Amount>512</Amount>
+      </CircularShift>
+      <IFFT>
+        <AudioSize>1024</AudioSize>
+      </IFFT>
+      <prZeroPadding>0</prZeroPadding>
+      <prSamplingRate>44100</prSamplingRate>
+      <Residual>0</Residual>
+      <prAnalWindowSize>1025</prAnalWindowSize>
+      <prAnalWindowType>BlackmanHarris92</prAnalWindowType>
+      <prHopSize>512</prHopSize>
+    </SpectralSynth>
+    <OverlapAddSin>
+      <FrameSize>512</FrameSize>
+    </OverlapAddSin>
+    <OverlapAddRes>
+      <FrameSize>512</FrameSize>
+    </OverlapAddRes>
+    <OverlapAddGlobal>
+      <FrameSize>512</FrameSize>
+    </OverlapAddGlobal>
+    <prSamplingRate>0</prSamplingRate>
+  </processing>
+
+  <port_connection>
+    <out>MonoAudioFileReader_0.Samples Read</out>
+    <in>SMSAnalysisCore_0.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader_0.Samples Read</out>
+    <in>Input 1.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader_1.Samples Read</out>
+    <in>SMSAnalysisCore_1.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader_1.Samples Read</out>
+    <in>Input 2.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Sinusoidal Peaks</out>
+    <in>PeakView_0.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Sinusoidal Peaks</out>
+    <in>SMSMorph_0.In SpectralPeaks 1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Fundamental</out>
+    <in>SMSMorph_0.In Fundamental 1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_0.Residual Spectrum</out>
+    <in>SMSMorph_0.In Spectrum 1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_1.Sinusoidal Peaks</out>
+    <in>SMSMorph_0.In SpectralPeaks 2</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_1.Fundamental</out>
+    <in>SMSMorph_0.In Fundamental 2</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSAnalysisCore_1.Residual Spectrum</out>
+    <in>SMSMorph_0.In Spectrum 2</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSMorph_0.Out SpectralPeaks</out>
+    <in>SMSSynthesis_0.InputSinPeaks</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSMorph_0.Out SpectralPeaks</out>
+    <in>PeakView_1.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSMorph_0.Out Spectrum</out>
+    <in>SMSSynthesis_0.InputResSpectrum</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputAudio</out>
+    <in>AudioSink_0.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SMSSynthesis_0.OutputAudio</out>
+    <in>Oscilloscope_1.Input</in>
+  </port_connection>
+
+  <control_connection>
+    <out>Interpolation Factor.out</out>
+    <in>SMSMorph_0.Interpolation Factor</in>
+  </control_connection>
+
+</network>

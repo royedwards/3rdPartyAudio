@@ -1,0 +1,34 @@
+Source: clam-chordata
+Section: sound
+Priority: optional
+Maintainer: CLAM Team <developers@clam-project.org>
+Uploaders: David García Garzón <dgarcia_debian@iua.upf.edu>
+Homepage: http://clam-project.org
+Build-Depends:
+ debhelper (>= 5.0.0),
+ scons,
+ libclam-dev,
+ libclam-qtmonitors-dev,
+ qt4-dev-tools,
+ libqt4-dev,
+ libqt4-opengl-dev,
+ docbook-to-man,
+ imagemagick,
+ imagemagick (>=7:6.6) | libmagickcore2-extra,
+ librsvg2-bin
+Standards-Version: 3.9.1
+
+Package: clam-chordata
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: CLAM Chordata, chord detection tool
+ CLAM Chordata is a chord detection tool that can be used to
+ browse the chords of your favourite mp3/ogg/wav music.
+ You can freely move arround the song, listening and 
+ getting insight of its tonal features by using several
+ available views: Chord segments, Chord ranking, Tonnetz,
+ Keyspace, Chromatic peaks, PCPgram...
+ .
+ This is an example application of the CLAM framework.
+
+

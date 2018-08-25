@@ -1,0 +1,612 @@
+<ui version="4.0" >
+ <class>Annotator</class>
+ <widget class="QMainWindow" name="Annotator" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>743</width>
+    <height>617</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="MinimumExpanding" hsizetype="MinimumExpanding" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize" >
+   <size>
+    <width>32767</width>
+    <height>32767</height>
+   </size>
+  </property>
+  <property name="windowTitle" >
+   <string>Music Annotator</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="images.qrc" >
+    <normaloff>:/logos/images/annotator-icon1.png</normaloff>:/logos/images/annotator-icon1.png</iconset>
+  </property>
+  <widget class="QWidget" name="widget" >
+   <layout class="QVBoxLayout" >
+    <property name="spacing" >
+     <number>6</number>
+    </property>
+    <property name="margin" >
+     <number>9</number>
+    </property>
+    <item>
+     <widget class="QTabWidget" name="mMainTabWidget" >
+      <property name="currentIndex" >
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="mSongLevelTab" >
+       <attribute name="title" >
+        <string>Song Descriptors</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="mSongLevelSplit" >
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <widget class="QTreeWidget" name="mSongListView" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Minimum" hsizetype="MinimumExpanding" >
+             <horstretch>5</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="whatsThis" >
+            <string>&lt;p>The &lt;b>project song list&lt;/b> is a list with the working songs for the project.&#xd;
+You can add songs to work with just by selecting the &lt;tt>Project/Add Song to Project&lt;/tt> option on the menu.&#xd;
+Click on one song to load its description.&lt;/p>&#xd;
+&lt;p>If there is no computed description, you can generate it for the selected song it&#xd;
+by clicking the &lt;tt>Compute Descriptors&lt;/tt> button and, once the computation is finished,&#xd;
+the &lt;tt>Reload Descriptors&lt;/tt> one.&lt;/p></string>
+           </property>
+           <property name="alternatingRowColors" >
+            <bool>true</bool>
+           </property>
+           <property name="selectionMode" >
+            <enum>QAbstractItemView::SingleSelection</enum>
+           </property>
+           <property name="rootIsDecorated" >
+            <bool>false</bool>
+           </property>
+           <column>
+            <property name="text" >
+             <string>File</string>
+            </property>
+           </column>
+          </widget>
+          <widget class="QTableWidget" name="mDescriptorsTable" >
+           <property name="sizePolicy" >
+            <sizepolicy vsizetype="Minimum" hsizetype="Maximum" >
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize" >
+            <size>
+             <width>250</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="focusPolicy" >
+            <enum>Qt::WheelFocus</enum>
+           </property>
+           <property name="whatsThis" >
+            <string>&lt;p>The &lt;b>song level descriptors table&lt;/b>&#xd;
+contains descriptors values for song level descriptors.&#xd;
+Song level descriptors are those that has a single occurrence for each song.&#xd;
+As constrast, 'note level descriptors' would have an occurrence for each note.&lt;/p>&#xd;
+&lt;p>You can edit the values by clicking to the proper cell.&lt;/p></string>
+           </property>
+           <property name="autoFillBackground" >
+            <bool>false</bool>
+           </property>
+           <property name="selectionMode" >
+            <enum>QAbstractItemView::NoSelection</enum>
+           </property>
+           <property name="rowCount" >
+            <number>0</number>
+           </property>
+           <property name="columnCount" >
+            <number>0</number>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+       <zorder>mSongLevelSplit</zorder>
+      </widget>
+      <widget class="QWidget" name="mIntrasongLevelTab" >
+       <attribute name="title" >
+        <string>Intrasong Descriptors</string>
+       </attribute>
+       <layout class="QVBoxLayout" >
+        <property name="spacing" >
+         <number>6</number>
+        </property>
+        <property name="margin" >
+         <number>9</number>
+        </property>
+        <item>
+         <widget class="QSplitter" name="mVSplit" >
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="mIntraSongToolbar" >
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
+   </attribute>
+   <addaction name="newProjectAction" />
+   <addaction name="fileOpen_projectAction" />
+   <addaction name="fileSave_projectAction" />
+   <addaction name="separator" />
+   <addaction name="editProjectPropertiesAction" />
+   <addaction name="browseSchemaAction" />
+   <addaction name="addSongAction" />
+   <addaction name="removeSongAction" />
+   <addaction name="reloadDescriptorsAction" />
+   <addaction name="songComputeDescriptorsAction" />
+   <addaction name="songSaveDescriptorsAction" />
+   <addaction name="separator" />
+   <addaction name="actionOnline_Tutorial" />
+   <addaction name="helpWhatsThisAction" />
+  </widget>
+  <widget class="QToolBar" name="TransportToolbar" >
+   <property name="orientation" >
+    <enum>Qt::Horizontal</enum>
+   </property>
+   <attribute name="toolBarArea" >
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak" >
+    <bool>false</bool>
+   </attribute>
+   <addaction name="playAction" />
+   <addaction name="pauseAction" />
+   <addaction name="stopAction" />
+   <addaction name="mLinkCurrentSegmentToPlaybackAction" />
+   <addaction name="mAuralizeSegmentOnsetsAction" />
+   <addaction name="mAuralizeFrameLevelDescriptorsAction" />
+  </widget>
+  <widget class="QMenuBar" name="MenuBar" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>743</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="mSongMenu" >
+    <property name="title" >
+     <string>&amp;Song</string>
+    </property>
+    <addaction name="songSaveDescriptorsAction" />
+    <addaction name="reloadDescriptorsAction" />
+    <addaction name="songComputeDescriptorsAction" />
+   </widget>
+   <widget class="QMenu" name="mProjectMenu" >
+    <property name="title" >
+     <string>&amp;Project</string>
+    </property>
+    <addaction name="addSongAction" />
+    <addaction name="removeSongAction" />
+    <addaction name="editProjectPropertiesAction" />
+    <addaction name="browseSchemaAction" />
+   </widget>
+   <widget class="QMenu" name="mFileMenu" >
+    <property name="title" >
+     <string>&amp;File</string>
+    </property>
+    <addaction name="newProjectAction" />
+    <addaction name="fileOpen_projectAction" />
+    <addaction name="fileSave_projectAction" />
+    <addaction name="separator" />
+    <addaction name="fileExitAction" />
+   </widget>
+   <widget class="QMenu" name="mPlaybackMenu" >
+    <property name="title" >
+     <string>&amp;Playback</string>
+    </property>
+    <addaction name="playAction" />
+    <addaction name="pauseAction" />
+    <addaction name="stopAction" />
+    <addaction name="separator" />
+    <addaction name="mLinkCurrentSegmentToPlaybackAction" />
+    <addaction name="mAuralizeSegmentOnsetsAction" />
+    <addaction name="mAuralizeFrameLevelDescriptorsAction" />
+   </widget>
+   <widget class="QMenu" name="menuView" >
+    <property name="title" >
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuAddInstantView" >
+     <property name="title" >
+      <string>Add &amp;instant view</string>
+     </property>
+    </widget>
+    <addaction name="actionAddSegmentationView" />
+    <addaction name="actionAddFrameEvolutionView" />
+    <addaction name="menuAddInstantView" />
+   </widget>
+   <widget class="QMenu" name="help" >
+    <property name="title" >
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="actionOnline_Tutorial" />
+    <addaction name="helpWhatsThisAction" />
+    <addaction name="separator" />
+    <addaction name="helpAboutQtAction" />
+    <addaction name="helpAboutAction" />
+   </widget>
+   <addaction name="mFileMenu" />
+   <addaction name="mProjectMenu" />
+   <addaction name="mSongMenu" />
+   <addaction name="mPlaybackMenu" />
+   <addaction name="menuView" />
+   <addaction name="help" />
+  </widget>
+  <action name="fileExitAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/exit.png</normaloff>:/icons/images/exit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>E&amp;xit</string>
+   </property>
+   <property name="iconText" >
+    <string>Exit</string>
+   </property>
+   <property name="statusTip" >
+    <string>Quits the application</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="helpAboutAction" >
+   <property name="text" >
+    <string>&amp;About Music Annotator</string>
+   </property>
+   <property name="iconText" >
+    <string>About</string>
+   </property>
+   <property name="statusTip" >
+    <string>Information about the application</string>
+   </property>
+  </action>
+  <action name="newProjectAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/window_new.png</normaloff>:/icons/images/window_new.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;New project</string>
+   </property>
+   <property name="iconText" >
+    <string>New project</string>
+   </property>
+   <property name="toolTip" >
+    <string>New project</string>
+   </property>
+   <property name="statusTip" >
+    <string>Creates a new project</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="fileSave_projectAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/project_save.png</normaloff>:/icons/images/project_save.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Save project</string>
+   </property>
+   <property name="iconText" >
+    <string>Save project</string>
+   </property>
+   <property name="toolTip" >
+    <string>Save project</string>
+   </property>
+   <property name="statusTip" >
+    <string>Save project</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="fileOpen_projectAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/project_open.png</normaloff>:/icons/images/project_open.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Open project</string>
+   </property>
+   <property name="iconText" >
+    <string>Open project</string>
+   </property>
+   <property name="toolTip" >
+    <string>Open project</string>
+   </property>
+   <property name="statusTip" >
+    <string>Open project</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="addSongAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/vcs_add.png</normaloff>:/icons/images/vcs_add.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Add songs to project</string>
+   </property>
+   <property name="iconText" >
+    <string>Add songs</string>
+   </property>
+   <property name="statusTip" >
+    <string>Add songs to project</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="removeSongAction" >
+   <property name="enabled" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/vcs_remove.png</normaloff>:/icons/images/vcs_remove.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Remove song from project</string>
+   </property>
+   <property name="iconText" >
+    <string>Remove song from project</string>
+   </property>
+   <property name="statusTip" >
+    <string>Remove song from project</string>
+   </property>
+   <property name="shortcut" >
+    <string/>
+   </property>
+  </action>
+  <action name="browseSchemaAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/view_tree.png</normaloff>:/icons/images/view_tree.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Browse &amp;Schema</string>
+   </property>
+   <property name="iconText" >
+    <string>Browse Schema</string>
+   </property>
+  </action>
+  <action name="songSaveDescriptorsAction" >
+   <property name="enabled" >
+    <bool>false</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/filesave.png</normaloff>:/icons/images/filesave.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Save Descriptors</string>
+   </property>
+   <property name="iconText" >
+    <string>Save Descriptors</string>
+   </property>
+  </action>
+  <action name="mAuralizeSegmentOnsetsAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/auralizeOnsets.png</normaloff>:/icons/images/auralizeOnsets.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Auralize segments &amp;onsets</string>
+   </property>
+   <property name="iconText" >
+    <string>Auralize segments onsets</string>
+   </property>
+  </action>
+  <action name="mAuralizeFrameLevelDescriptorsAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/auralizeFrameLevel.png</normaloff>:/icons/images/auralizeFrameLevel.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Auralize &amp;frame level descriptors</string>
+   </property>
+   <property name="iconText" >
+    <string>Auralize frame level descriptors</string>
+   </property>
+  </action>
+  <action name="songComputeDescriptorsAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/gear.png</normaloff>:/icons/images/gear.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Compute descriptors</string>
+   </property>
+   <property name="iconText" >
+    <string>Compute descriptors</string>
+   </property>
+  </action>
+  <action name="helpWhatsThisAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/contexthelp.png</normaloff>:/icons/images/contexthelp.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;What's this?</string>
+   </property>
+   <property name="iconText" >
+    <string>What's this?</string>
+   </property>
+   <property name="shortcut" >
+    <string>Shift+F1</string>
+   </property>
+  </action>
+  <action name="playAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_play.png</normaloff>:/icons/images/player_play.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Play</string>
+   </property>
+   <property name="iconText" >
+    <string>Play</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="pauseAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_pause.png</normaloff>:/icons/images/player_pause.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Pause</string>
+   </property>
+   <property name="iconText" >
+    <string>Pause</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+W</string>
+   </property>
+  </action>
+  <action name="stopAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/player_stop.png</normaloff>:/icons/images/player_stop.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Stop</string>
+   </property>
+   <property name="iconText" >
+    <string>Stop</string>
+   </property>
+   <property name="shortcut" >
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="mLinkCurrentSegmentToPlaybackAction" >
+   <property name="checkable" >
+    <bool>true</bool>
+   </property>
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/segmentFollows.png</normaloff>:/icons/images/segmentFollows.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Link current segment to playback</string>
+   </property>
+   <property name="iconText" >
+    <string>Link current segment to playback</string>
+   </property>
+  </action>
+  <action name="helpAboutQtAction" >
+   <property name="text" >
+    <string>About &amp;Qt</string>
+   </property>
+   <property name="statusTip" >
+    <string>Information about Qt</string>
+   </property>
+  </action>
+  <action name="reloadDescriptorsAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/reload.png</normaloff>:/icons/images/reload.png</iconset>
+   </property>
+   <property name="text" >
+    <string>&amp;Reload descriptors</string>
+   </property>
+   <property name="statusTip" >
+    <string>Reload descriptors file</string>
+   </property>
+  </action>
+  <action name="actionAddSegmentationView" >
+   <property name="text" >
+    <string>Add &amp;segmentation view</string>
+   </property>
+   <property name="statusTip" >
+    <string>Add segmentation view</string>
+   </property>
+  </action>
+  <action name="actionAddFrameEvolutionView" >
+   <property name="text" >
+    <string>Add &amp;frame evolution view</string>
+   </property>
+  </action>
+  <action name="editProjectPropertiesAction" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/edit.png</normaloff>:/icons/images/edit.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Edit project properties</string>
+   </property>
+  </action>
+  <action name="actionOnline_Tutorial" >
+   <property name="icon" >
+    <iconset resource="images.qrc" >
+     <normaloff>:/icons/images/help.png</normaloff>:/icons/images/help.png</iconset>
+   </property>
+   <property name="text" >
+    <string>Online &amp;Tutorial</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <tabstops>
+  <tabstop>mMainTabWidget</tabstop>
+  <tabstop>mSongListView</tabstop>
+  <tabstop>mDescriptorsTable</tabstop>
+ </tabstops>
+ <resources>
+  <include location="images.qrc" />
+ </resources>
+ <connections/>
+</ui>

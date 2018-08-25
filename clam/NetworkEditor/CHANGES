@@ -1,0 +1,257 @@
+2011-??-?? NetworkEditor 1.4.1 SVN $Revision: 15441 $
+''
+ * Auto-upgrade old networks on load, calling the migration script..
+ * New UI Binders architecture:
+   * Not tied to the Prototyper, you can use them in your own application
+   * Available by linking to qtmonitors library
+   * Use of custom properties: no name collisions, you can set more binding information
+   * Configuration binders to open the configurator of a given processing in prototyper
+ * Uses native icon theme, failback icons updated to Oxygen theme
+ * Python console to manipulate the network (requires installing ipyclam and ipython)
+ * Buttons to toggle new dock panels
+ * More examples:
+   * Boolean controls example
+   * Configuration binder example
+ * CheckClamNetwork: a new program to test networks load properly.
+ * Cartesian2PolarControl : moved from NetworkEditor to spacialization plugin
+ * GenderChange prototype: 
+   ** fixed names of AudioSource ports
+   ** an spacer added between buttons
+   ** added documentation
+ * fixed problem into Audio2MIDI.clamnetwork 
+ * prefix_for_packaging scons option for better distribution packaging
+ * FIX: Prototyper is a QtCoreApplication to avoid requiring X11
+ * FIX: Prototyper stops the backend before exiting
+ * FIX: Cut and paste duplicated all the information text items
+
+2010-03-05 NetworkEditor 1.4.0
+'3D moluscs in the space release'
+ * SVN Revision: 14035
+ * Using CLAM 1.4.0
+ * Networks can be paused (in NetworkEditor and OfflinePlayer)
+ * Fix: Playback status changes from the backend side are pooled by the indicator
+ * Typed controls: controls deal with other types than floats
+ * Sources and sinks with multiple ports.
+ * Interface enhancements:
+   * NetworkCanvas ported to QGraphicsView framework
+   * Multiple port drag: Control key drags a bus of wires from a processing to another.
+   * Highlighting connected wires when you hover a port/control
+   * Connection context menu organized with sections
+   * Network wide and in-canvas documentation
+   * Icons on processing boxes (double clicking, configures; hovering, shows type info)
+   * Fix: Processings were configured twice or three times when loaded.
+ * NetworkCanvas clam dependencies moved out to ClamNetworkCanvas so the core can
+   be reused for other purposes (jack, other projects...)
+ * clam-qtmonitors library now contains common monitors, control senders and displays
+ * Fix: spinboxes on controlsenders sent step values instead the actual value
+ * Configurators: Support for negative floating point numbers
+ * Configurators: increased float precission from 2 to now 5 decimals
+ * Boolean controls as an example for new typed controls. Include:
+   * BinaryCounter, BooleanGate, BoolControlSender, BoolControlDisplay...
+ * .pos files for processing boxes positions deprecated
+ * MIDIPianoWidget: MIDI monitor and note generator
+ * Histogram view
+
+2008-08-11 NetworkEditor 1.3.0
+'Shooting flying plugins release'
+ * SVN Revision: 11960
+ * Using CLAM 1.3.0
+ * Native windows compilation (using mingw) working without patches (GSoC:jun)
+ * One-click LADSPA plugin generation
+ * Faust support under Linux (GSoC: Natanael):
+   * One-click Faust compilation as LADSPA plugins
+   * Dynamic reloading of Faust compiled LADSPA plugins
+   * Option to include Faust generated embedded diagrams on processings boxes
+   * Faust plugins processing boxes context menu allowing to:
+     * edit the source with an external editor
+     * navigate the Faust diagrams with a browser
+ * Interface enhancements: (GSoC: Natanael)
+   * Cut and paste processings
+   * Processings geometries embedded on the network files on saving
+   * AudioSource and AudioSink processings have embbeded graphics on canvas
+   * Port context menu to connect to compatible existing ports
+   * Port context menu to add connected sources/sinks, monitors, 
+     controlSenders and controlPrinters
+   * Ctrl+Space to add processings
+   * Processing tree has a filter box
+   * Processing tree shows processings icons
+   * Processing tree shows a tooltip with processings creators metadata
+ * OfflinePlayer uses floating point wavs to avoid clipping
+ * OfflinePlayer commandline options to join/split channels on a single file
+
+2008-02-05 NetworkEditor 1.2.0
+'GSoCket Plugged-in release'
+ * SVN Revision: 11171
+ * Using CLAM 1.2.0
+ * Better and updated online tutorial
+ * Loads CLAM and Ladpsa Plugins
+ * Shows ports of different colors depending on token data type
+ * Port tooltips show also the data type name
+ * Suitable monitors are available to add at port context menu
+ * Suitable controlers are available at control context menu
+   or double clicking
+ * The processing is automatically populated with available
+   processings. (GSoC:acalvo)
+ * Dialog to add processings has completion
+ * New spectrogram view (GSoC:bkolasinsky)
+
+2007-06-08 NetworkEditor 1.1.0
+'More eye-candy, please'
+ * SVN Revision: 10216
+ * Using CLAM 1.1.0
+ * New examples
+   * genderChange: fully working now and with an interface
+   * experimentalVowelSynth: Synthesize vowels by controling F1 and 
+     F2 in a surface such moving in the vowel triangle.
+   * spectralTransform: New interface based on pkwidgets
+   * lpc: LPC/MFCC realtime analysis
+ * New and enhanced control widgets:
+   * New pixmap based control widgets (idea and pixmaps taken from PKSampler)
+   * New resizable knob widget (QSynth knobs with enhancements)
+   * ControlSender widget is configurable (Zack Welch)
+   * Automatic ControlSender creation on input control double click
+     and also by using the context menu
+   * ControlSurface to control two parameters at once
+   * Graphical ControlPrinter (Zack Welch)
+ * New views:
+   * BarGraph view (and derived classes for LPC, MFCC...)
+ * Added an option to compile Faust based processing
+ * Selection Handling
+   * Moving several selected processings at once
+   * Starting a selection drag without control key pressed clears
+     previous selections
+   * As side effect, clicking on the canvas without control key clears
+     selections
+   * Clicking on the name also selects
+   * Ctrl+A selects all the processings
+   * Ctrl+Shift+A clears the selection
+   * Pan drag feature has been removed (it did a move, not a real pan)
+
+2007-03-20 NetworkEditor 1.0.0
+'The Berlin release'
+ * SVN Revision: 9881
+ * Using CLAM 1.0.0
+ * Functional Ladspa support
+
+2007-03-18 NetworkEditor 0.4.4
+'That will be CLAM 1.0 release'
+ * SVN Revision: 9864
+ * Using CLAM 0.99.0
+ * Prototyper sets the name of the network as JACK client name
+ * More processings: Different IFFT and FFT implementations,
+   SpectrumSubstracter2, ...
+ * Fix: Can't change name of a processing (#166 #194 #173)
+ * Added ladspa plugins browsing (not still droppable).
+ * PeaksView adjust to the minimum magnitude.
+ * OfflinePlayer program to apply batch processing to
+   audio files.
+
+2006-02-09 NetworkEditor 0.4.3
+'Mac is back to stay'
+ * Using CLAM 0.98 
+ * Using new bundle and dmg tools
+ * New icon for Prototyper
+ * Fix: Open toolbox button did't work after the recent files modification
+ * Down arrow hint on the open toolbox button icon
+ * Fix: On quit action quit
+ * Shortcuts for printing and quiting
+ * Oscilloscope added to the FilePlayer example
+ * KDE3 desktop integration (Mime actions, file icons)
+
+2006-12-30 NetworkEditor 0.4.2 
+'Debian Packages: less is more'
+ * Open recent files option
+ * Using CLAM 0.97.0
+
+2006-12-22 NetworkEditor 0.4.1
+'The most stable NetworkEditor ever'
+ * Using CLAM 0.96.0
+ * CLAM Networks as VST plugins
+ * Fix: OutControlSenders resends its last value (or default) on start
+ * Fix: Removing processing with connected controls caused crash. 
+   Now controls links are bidirectional.
+ * Fix: NetworkEditor crashed when playing and done a add/remove/configure 
+   processing or add/remove wire.  Now the network stops gacefully. 
+
+2006-12-04 NetworkEditor 0.4.0
+'California release'
+ * Using CLAM 0.95.0
+ * Ported to Qt4 and fully rewritten
+ * New network canvas engine
+   ** Scrollbars and zoom
+   ** Big connectors to ease the connections
+   ** Consistent sizes of drawn elements
+   ** Hovering a connector highlights it
+   ** Hovering a connector displays a tooltip with its name
+   ** Connector tooltips and highlights helps to figure out were you are going
+      to drop the wire
+   ** Dropping wire highlight color tells whether it will drop or not 
+     (redish: wrong; greenish correct)
+   ** Missconfigured processings show a tooltip with the error
+   ** Context menus for processings and connectors
+   ** Dragging from the processing toolbox displays a processing icon
+   ** Semitransparent processing boxes
+   ** Copying connector names for their use in the Prototyper
+   ** Printing networks and exporting ps/pdf
+   ** Dummy mode for free drawing without underlying processings
+      *** Dropping whatever text to create a processing
+      *** Configuring whatever number of connectors for a processing
+      *** Connecting whatever complementary connectors
+ * Backends
+   ** Just one binary for all backends in a platform
+   ** By default, cascade try
+   ** You can specify one by command line
+   ** Backend indications on the status bar
+ * Reliability
+   ** Errors on load a network are reported without crash
+   ** Unplayable networks are reported (used to hang realtime kernels)
+   ** Errors on bad processing drops are reported without crash
+   ** Errors on  are reported without crash
+   ** 'Modified' flag is set properly and checked before discarding changes
+ * Other interface enhancements
+   ** Common actions available on the toolbar
+   ** Playback and backend indicators
+   ** Open examples
+   ** Menu options to open recent netwoks
+ * Help
+   ** Generic context help for canvas, processings and connectors
+   ** One click access to the online tutorial
+ * Prototyper (network runner)
+   ** Just one binary for all backends in a platform
+   ** Cascade backend try (command line list or implicit default list)
+   ** Errors on loading are reported graphically
+   ** Errors on binding the interface are reported graphically
+   ** Unplayable network errors are reported and the playback declined
+   ** Asking the network when
+   ** Default interface when missing, when no implicit (adding .ui) or failed
+   ** QLabel named BackendIndicator is filled with backend information
+   ** QLabel named PlaybacIndicator is filled with the playback status
+   ** QPushButton named AudioFile_<ProcessingName> will configure the
+        file that an MonoAudioFileReader will load.
+ * NetworkEditor plots and qt widgets plugins:
+   ** Ported to Qt4 designer
+   ** Some properties can be changed on the designer such as colors,
+        refresh time...
+   ** Faster oscilloscope, spectrum and peaks views
+   ** Tonal analysis widgets: Tonnetz, KeySpace ChordRanking, Tunner,
+        PolarChromaPeaks...
+ * Desktop integration
+   ** Menu entries
+   ** File type association in windows to open (Prototyper)
+   ** File type association in windows to edit (NetworkEditor)
+   ** Windows menu access for some examples
+   ** Designer installed in windows setup
+   ** Experimental mime bindings for Linux (freedesktop).
+
+2006-06-?? NetworkEditor 0.3.2
+'Unreleased release'
+ * Still qt3, not released but tagged on CVS
+ * Network files extension is now .clamnetwork
+ * Prototypers ask for a network when none given or launched from the menu
+ * Mime types and actions added
+ * Taking the version from the changelog file (CHANGES)
+
+
+For previous releases see the CLAM changelog
+
+

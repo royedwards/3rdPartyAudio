@@ -1,0 +1,61 @@
+<network id="Unnamed">
+
+  <processing id="AudioSink_0" position="441,157" size="141,111" type="AudioSink" />
+
+  <processing id="AudioSource_0" position="-24,80" size="165,108" type="AudioSource" />
+
+  <processing id="ControlSource_0" position="150,24" size="180,64" type="ControlSource">
+    <MinValue>1</MinValue>
+    <MaxValue>70</MaxValue>
+    <Step>0.1</Step>
+    <UnitName>Hz</UnitName>
+  </processing>
+
+  <processing id="ControlSource_1" position="351,28" size="180,64" type="ControlSource">
+    <MinValue>-5</MinValue>
+    <MaxValue>5</MaxValue>
+    <Step>0.1</Step>
+    <UnitName>dB</UnitName>
+  </processing>
+
+  <processing id="Oscillator_0" position="258,178" size="138,64" type="Oscillator">
+    <Frequency>440</Frequency>
+    <Amplitude>1</Amplitude>
+    <ModIndex>1</ModIndex>
+    <Phase>0</Phase>
+    <SamplingRate>44100</SamplingRate>
+  </processing>
+
+  <processing id="SimpleOscillator_0" position="29,219" size="199,64" type="SimpleOscillator">
+    <Frequency>10</Frequency>
+    <Amplitude>1</Amplitude>
+    <Phase>0</Phase>
+    <SamplingRate>44100</SamplingRate>
+  </processing>
+
+  <port_connection>
+    <out>AudioSource_0.1</out>
+    <in>Oscillator_0.Input Phase Modulation</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Oscillator_0.Audio Output</out>
+    <in>AudioSink_0.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>SimpleOscillator_0.Audio Output</out>
+    <in>Oscillator_0.Input Frequency Modulation</in>
+  </port_connection>
+
+  <control_connection>
+    <out>ControlSource_0.output</out>
+    <in>SimpleOscillator_0.Pitch</in>
+  </control_connection>
+
+  <control_connection>
+    <out>ControlSource_1.output</out>
+    <in>Oscillator_0.Amplitude</in>
+  </control_connection>
+
+</network>

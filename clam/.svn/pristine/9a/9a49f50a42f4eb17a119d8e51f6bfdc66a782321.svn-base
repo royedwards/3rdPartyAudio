@@ -1,0 +1,67 @@
+Source: clam-plugins
+Section: sound
+Priority: optional
+Maintainer: CLAM Team <developers@clam-project.org>
+Uploaders: David García Garzón <dgarcia_debian@iua.upf.edu>
+Homepage: http://clam-project.org
+Build-Depends:
+ debhelper (>= 5.0.0),
+ scons,
+ libclam-dev,
+ liblo0-dev
+Standards-Version: 3.9.1
+
+Package: libclam-plugins1.4
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends} 
+Provides: libclam-plugins, clam-plugin
+Conflicts: libclam-plugins
+Recommends: clam-networkeditor
+Description: CLAM framework plugins
+ CLAM is a framework to develop audio and music applications in C++.
+ It provides tools to perform advanced analysis, transformations and synthesis,
+ visualization for audio and music related objects, and other tools that are
+ useful to abstract target platform for most tasks in an audio applications
+ such as audio devices, file formats, threading...
+ .
+ This package provides several plugins extensions for the CLAM audio
+ framework, which are already provided by the CLAM project including:
+  * OSC support
+  * Real-time 3D acoustics scene simulation (ambisonics, raytracing, HRTF's)
+  * Speech synthesis and analysis
+  * Simple SMS based synthesizer
+  * Guitar effects
+  * Sample by sample convolution effects
+  * Lock-free wave file reader
+
+Package: libclam-plugins1.4-dev
+Architecture: any
+Section: libdevel
+Depends:  ${shlibs:Depends}, ${misc:Depends}, libclam1.4-dev, libclam-plugins1.4 (= ${binary:Version})
+Description: CLAM framework plugins - development files
+ CLAM is a framework to develop audio and music applications in C++.
+ It provides tools to perform advanced analysis, transformations and synthesis,
+ visualization for audio and music related objects, and other tools that are
+ useful to abstract target platform for most tasks in an audio applications
+ such as audio devices, file formats, threading...
+ .
+ This package provides development files needed to compile C++ code referring
+ specific symbols in libclam-plugins. This package is not required to use
+ plugins as long as the processing object defined in them are created by means
+ of factories and manipulated using the abstract interfaces in libclam-core.
+ 
+Package: libclam-plugins1.4-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: libclam-plugins1.4 (= ${binary:Version}), ${misc:Depends}
+Description: CLAM framework plugins - debug symbols
+ CLAM is a framework to develop audio and music applications in C++.
+ It provides tools to perform advanced analysis, transformations and synthesis,
+ visualization for audio and music related objects, and other tools that are
+ useful to abstract target platform for most tasks in an audio applications
+ such as audio devices, file formats, threading...
+ .
+ This package contains the debug symbols for the extension plugins
+ provided by the CLAM project.
+

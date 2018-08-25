@@ -1,0 +1,3 @@
+usr/lib/libclam_*.so.*
+usr/lib/clam/libclam_*_plugin.so
+

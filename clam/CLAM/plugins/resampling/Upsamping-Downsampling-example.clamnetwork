@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<network clamVersion="1.4.1" id="Unnamed">
+
+  <description>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</description>
+
+  <processing id="AudioSink" position="938,299" size="128,111" type="AudioSink">
+    <NSinks>1</NSinks>
+  </processing>
+
+  <processing id="Downsampling x2" position="711,315" size="188,63" type="ResamplerByRatio">
+    <Ratio>0.5</Ratio>
+    <Interpolator>SINC_FASTEST</Interpolator>
+  </processing>
+
+  <processing id="Drive amount" position="505,210" size="198,89" type="OutControlSender">
+    <Min>0</Min>
+    <Default>0</Default>
+    <Max>1</Max>
+    <Step>0.01</Step>
+    <ControlRepresentation>Horizontal Slider</ControlRepresentation>
+    <Mapping>Linear</Mapping>
+  </processing>
+
+  <processing id="MonoAudioFileReader" position="16,304" size="214,63" type="MonoAudioFileReader">
+    <SourceFile>../../../../clam-test-data/Elvis.wav</SourceFile>
+    <SelectedChannel>0</SelectedChannel>
+    <Loop>0</Loop>
+  </processing>
+
+  <processing id="Upsampling x2" position="266,309" size="188,63" type="ResamplerByRatio">
+    <Ratio>2</Ratio>
+    <Interpolator>SINC_FASTEST</Interpolator>
+  </processing>
+
+  <processing id="ZynDistortion" position="482,307" size="150,63" type="ZynDistortion">
+    <DistortionType>Arctangent</DistortionType>
+  </processing>
+
+  <port_connection>
+    <out>Downsampling x2.Output</out>
+    <in>AudioSink.1</in>
+  </port_connection>
+
+  <port_connection>
+    <out>MonoAudioFileReader.Samples Read</out>
+    <in>Upsampling x2.Input</in>
+  </port_connection>
+
+  <port_connection>
+    <out>Upsampling x2.Output</out>
+    <in>ZynDistortion.Input Audio</in>
+  </port_connection>
+
+  <port_connection>
+    <out>ZynDistortion.Audio Output</out>
+    <in>Downsampling x2.Input</in>
+  </port_connection>
+
+  <control_connection>
+    <out>Drive amount.out</out>
+    <in>ZynDistortion.Drive amount</in>
+  </control_connection>
+
+</network>
