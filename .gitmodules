@@ -115,3 +115,6 @@
 [submodule "ear"]
 	path = ear
 	url = git@github.com:aothms/ear.git
+[submodule "2D-Audio-Path-Tracing"]
+	path = 2D-Audio-Path-Tracing
+	url = git@github.com:sebadorn/2D-Audio-Path-Tracing.git
