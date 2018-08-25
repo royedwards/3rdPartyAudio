@@ -100,3 +100,12 @@
 [submodule "ParallelFDTD"]
 	path = ParallelFDTD
 	url = git@github.com:juuli/ParallelFDTD.git
+[submodule "UnrealEngine"]
+	path = UnrealEngine
+	url = git@github.com:NvPhysX/UnrealEngine.git
+[submodule "resonance-audio"]
+	path = resonance-audio
+	url = git@github.com:resonance-audio/resonance-audio.git
+[submodule "resonance-audio-daw-tools"]
+	path = resonance-audio-daw-tools
+	url = git@github.com:resonance-audio/resonance-audio-daw-tools.git
